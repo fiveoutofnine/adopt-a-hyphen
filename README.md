@@ -1,8 +1,8 @@
 # hyphenation
 
-[**Site**](https://partyvs.party/) - [**Party**](https://www.party.app/party/0x1c409297dd82167B6be3e79D4bF0B6f7a6ff0dB4) - [**Tweet**](https://twitter.com/prtyDAO/status/1674447750182719489)
+[**Site**](https://partyvs.party/) - [**Party**](https://www.party.app/party/0x1c409297dd82167B6be3e79D4bF0B6f7a6ff0dB4) - [**Tweet**](https://twitter.com/prtyDAO/status/1674447750182719489) - [**hyphenation**](https://hyphenation.vercel.app) / [**scotato/hyphenation**](https://github.com/scotato/hyphenation)
 
-An NFT that adds a hyphen to its metadata image (SVG) every time a token is minted.
+adopt a hyphenated friend
 
 ## Usage
 
