@@ -194,7 +194,7 @@ library HyphenationArt {
 
         // `bitmap` has `0`s where the index corresponds to a Hyphen Guy
         // character, and `1` where not. We use this to determine whether to
-        // render a Hyphen Guy` character or a background character.
+        // render a Hyphen Guy character or a background character.
         uint256 bitmap = 0x1FFFFFFFFFFFFFFFFFFFEFFFFF07FFFE4FFFFC9FFFFFFFFFFFFFFFFFFFFFFFFF;
         uint8 chest = hyphenGuy.chest;
         assembly {
