@@ -24,8 +24,10 @@ contract PrintHyphenationScript is Script {
         }
     }
 
-    /// @notice Prints the token URI for token #1.
+    /// @notice Prints the token URIs for tokens #1 through #15.
     function run() public view {
-        console.log(hyphenation.tokenURI(1));
+        for (uint256 i = 1; i <= 15; i++) {
+            console.log(hyphenation.tokenURI(i));
+        }
     }
 }

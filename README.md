@@ -23,3 +23,8 @@ To test the metadata output, follow the instructions in [`PrintHyphenationScript
 ```sh
 forge script script/PrintHyphenationScript.s.sol:PrintHyphenationScript -vvv
 ```
+
+To preview SVG files:
+```sh
+node script/preview.js
+```
