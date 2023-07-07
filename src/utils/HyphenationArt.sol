@@ -101,7 +101,11 @@ library HyphenationArt {
         "qDOAYj5T06tcsSRcZBd7t1R4zixMcjo4dI21xp0nRxBn/3uDap2g3ql6bTBKc+/a3oUa/t34w3oQeJMlM+jNy82KA+"
         "HVbr1GVcH79cKVV6FuSpU28mK5MXS802lgKzHItxhodxarDksKiHly4LnTqM9cExdQ+bfAj+oD48AADPLioAkda+TD"
         "w3f9F3AAAAAA==)}text{font-family:A;font-size:8px;text-anchor:left;letter-spacing:0.236364p"
-        "x;dominant-baseline:central;white-space:pre;line-height:12.6px}.a{fill:";
+        "x;dominant-baseline:central;white-space:pre;line-height:12.6px}@supports (color:color(disp"
+        "lay-p3 1 1 1)){.z{fill:oklch(79.59% 0.042 250.64)}.y{fill:oklch(60.59% 0.306 309.33)}.x{fi"
+        "ll:oklch(69.45% 0.219 157.46)}.w{fill:oklch(75.22% 0.277 327.48)}.v{fill:oklch(77.86% 0.16"
+        " 226.017)}.u{fill:oklch(74.3% 0.213 50.613)}.t{fill:oklch(61.52% 0.224 256.099)}.s{fill:ok"
+        "lch(62.61% 0.282 29.234)}}</style><rect ";
 
     /// @notice Ending string for the SVG.
     string constant SVG_END = "</text></svg>";
@@ -154,6 +158,8 @@ library HyphenationArt {
 
     uint256 constant COLORS =
         0xA9BFD700AD43ED0000BA7300FE63FF0000C9FF00FF8633000080FF00FE0000;
+
+    bytes32 constant COLOR_CLASSES = "stuvwxyz";
 
     // -------------------------------------------------------------------------
     // `render`
@@ -366,6 +372,13 @@ library HyphenationArt {
             }
         }
 
+        string memory colorHexString = string.concat(
+            "#",
+            ((COLORS >> (hyphenGuy.color << 5)) & 0xFFFFFF).toHexStringNoPrefix(
+                3
+            )
+        );
+
         return
             string.concat(
                 "data:image/svg+xml;base64,",
@@ -373,23 +386,42 @@ library HyphenationArt {
                     abi.encodePacked(
                         string.concat(
                             SVG_START,
-                            "rgba(0,0,0,0.05)",
-                            "}.b{fill:#",
                             hyphenGuy.inverted
-                                ? "FFF"
-                                : ((COLORS >> (hyphenGuy.color << 5)) &
-                                    0xFFFFFF).toHexStringNoPrefix(3),
-                            '}</style><rect width="150" height="150" rx="6" fill="#',
+                                ? string.concat(
+                                    'class="',
+                                    string(
+                                        abi.encodePacked(
+                                            COLOR_CLASSES[hyphenGuy.color]
+                                        )
+                                    ),
+                                    '"'
+                                )
+                                : "",
+                            'width="150" height="150" rx="6" fill="#',
                             hyphenGuy.inverted
                                 ? ((COLORS >> (hyphenGuy.color << 5)) &
                                     0xFFFFFF).toHexStringNoPrefix(3)
                                 : "FFF",
-                            '"/><text class="a" x="8" y="12">',
+                            '"/><text class="a" x="8" y="12" fill="rgba(0,0,0,0.05)">',
                             bgStr,
                             // Recall that ``N'' was not accounted for in the
                             // loop because we didn't look at index 0, so we
                             // draw it here.
-                            'N</text><text class="b" x="60.527" y="49.8">',
+                            "N</text><text",
+                            hyphenGuy.inverted
+                                ? ""
+                                : string.concat(
+                                    ' class="',
+                                    string(
+                                        abi.encodePacked(
+                                            COLOR_CLASSES[hyphenGuy.color]
+                                        )
+                                    ),
+                                    '"'
+                                ),
+                            ' x="60.527" y="49.8" fill="',
+                            hyphenGuy.inverted ? "FFF" : colorHexString,
+                            '">',
                             charStr,
                             SVG_END
                         )
