@@ -43,6 +43,8 @@ library HyphenationArt {
         uint8 background;
         bool chaosBg;
         uint8 intensity;
+        bool inverted;
+        uint8 color;
     }
 
     // -------------------------------------------------------------------------
@@ -150,6 +152,9 @@ library HyphenationArt {
     /// here.
     bytes32 constant CHAIN_REVERSED = "NIAHC";
 
+    uint256 constant COLORS =
+        0xA9BFD700AD43ED0000BA7300FE63FF0000C9FF00FF8633000080FF00FE0000;
+
     // -------------------------------------------------------------------------
     // `render`
     // -------------------------------------------------------------------------
@@ -188,6 +193,10 @@ library HyphenationArt {
         hyphenGuy.intensity = uint8(
             prng.state & 3 == 0 ? 252 : prng.state % 253
         ); // 25% chance + 253 intensities (2 + 8 = 10 bits)
+        prng.state >>= 10;
+        hyphenGuy.inverted = prng.state & 3 == 0; // 12.5% chance (3 bits)
+        prng.state >>= 3;
+        hyphenGuy.color = uint8(prng.state & 3); // 8 colors (3 bits)
 
         // Get the next state in the PRNG.
         prng.state = prng.next();
@@ -364,11 +373,17 @@ library HyphenationArt {
                     abi.encodePacked(
                         string.concat(
                             SVG_START,
-                            "rgba(0,0,0,0.05)", // Background text color.
-                            "}.b{fill:",
-                            "#AD43ED", // Hyphen Guy color.
-                            '}</style><rect width="150" height="150" rx="6" fill="',
-                            "white", // Background color
+                            "rgba(0,0,0,0.05)",
+                            "}.b{fill:#",
+                            hyphenGuy.inverted
+                                ? "FFF"
+                                : ((COLORS >> (hyphenGuy.color << 5)) &
+                                    0xFFFFFF).toHexStringNoPrefix(3),
+                            '}</style><rect width="150" height="150" rx="6" fill="#',
+                            hyphenGuy.inverted
+                                ? ((COLORS >> (hyphenGuy.color << 5)) &
+                                    0xFFFFFF).toHexStringNoPrefix(3)
+                                : "FFF",
                             '"/><text class="a" x="8" y="12">',
                             bgStr,
                             // Recall that ``N'' was not accounted for in the
