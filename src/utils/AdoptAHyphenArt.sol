@@ -228,7 +228,7 @@ library AdoptAHyphenArt {
             prng.state & 3 == 0 ? prng.state % 253 : 252
         ); // 25% chance + 253 intensities (2 + 8 = 10 bits)
         prng.state >>= 10;
-        hyphenGuy.inverted = prng.state & 3 == 0; // 12.5% chance (3 bits)
+        hyphenGuy.inverted = prng.state & 7 == 0; // 12.5% chance (3 bits)
         prng.state >>= 3;
         hyphenGuy.color = uint8(prng.state & 7); // 8 colors (3 bits)
 
@@ -269,12 +269,7 @@ library AdoptAHyphenArt {
 
         // Shuffle the array.
         prng.shuffle(bgBitmapBits);
-        // We set `bgBitmap` to `4` (`0b100`), to ensure the bits are set
-        // correctly, even if the first few read from `bgBitmapBits` are `0`.
-        // Note that we can safely use `4` as a value because 253 bits offer us
-        // a 3-bit leeway. Additionally, first 3 bits (from `4`) will never be
-        // read because the index only goes as high as 252.
-        uint256 bgBitmap = 4;
+        uint256 bgBitmap;
         for (uint256 i; i < 253; ) {
             // `intensity >= 252` implies `intenseBg = true`
             bgBitmap |= bgBitmapBits[i];
