@@ -2,13 +2,13 @@
 pragma solidity ^0.8.17;
 
 import {LibString} from "solady/utils/LibString.sol";
-import {HyphenationArt} from "./HyphenationArt.sol";
+import {AdoptAHyphenArt} from "./AdoptAHyphenArt.sol";
 
-/// @title HyphenationMetadata
-/// @notice A library for generating metadata for {Hyphenation}.
+/// @title AdoptAHyphenMetadata
+/// @notice A library for generating metadata for {AdoptAHyphen}.
 /// @dev For this library to be correct, all `_seed` values must be consistent
-/// with every function in both {HyphenationArt} and {HyphenationMetadata}.
-library HyphenationMetadata {
+/// with every function in both {AdoptAHyphenArt} and {AdoptAHyphenMetadata}.
+library AdoptAHyphenMetadata {
     using LibString for uint256;
 
     /// @notice Number of bits used to generate the art. We take note of this
@@ -197,16 +197,16 @@ library HyphenationMetadata {
         // We directly use the value of `_seed` because we don't need further
         // randomness.
         // The bits used to determine the color value are bits [24, 27]
-        // (0-indexed). See {HyphenationArt.render} for more information.
+        // (0-indexed). See {AdoptAHyphenArt.render} for more information.
         uint256 background = (_seed >> 24) % 9;
 
         // The bits used to determine whether the background is in ``intensity
         // mode'' or not are bits [30, 31] (0-indexed). See
-        // {HyphenationArt.render} for more information.
+        // {AdoptAHyphenArt.render} for more information.
         bool intensityMode = ((_seed >> 30) & 3) == 0;
 
         // The bits used to determine the color value are bits [43, 45]
-        // (0-indexed). See {HyphenationArt.render} for more information.
+        // (0-indexed). See {AdoptAHyphenArt.render} for more information.
         uint256 color = (_seed >> 43) & 3;
 
         // The art renderer uses the last `BITS_USED` bits to generate its
@@ -226,7 +226,7 @@ library HyphenationMetadata {
                 '"},',
                 '{"name":"vibe","value":"',
                 string(
-                    abi.encodePacked(HyphenationArt.BACKGROUNDS[background])
+                    abi.encodePacked(AdoptAHyphenArt.BACKGROUNDS[background])
                 ),
                 '"},{"demeanor":"',
                 intensityMode ? "ex" : "in",
