@@ -116,10 +116,11 @@ library HyphenationArt {
         "HVbr1GVcH79cKVV6FuSpU28mK5MXS802lgKzHItxhodxarDksKiHly4LnTqM9cExdQ+bfAj+oD48AADPLioAkda+TD"
         "w3f9F3AAAAAA==)}pre{font-family:A;font-size:8px;text-align:center;margin:0;letter-spacing:"
         "0.226087px;line-height:12.75px}@supports (color:color(display-p3 1 1 1)){.z{color:oklch(79"
-        ".59% 0.042 250.64)}.y{color:oklch(60.59% 0.306 309.33)}.x{color:oklch(69.45% 0.219 157.46)"
-        "}.w{color:oklch(75.22% 0.277 327.48)}.v{color:oklch(77.86% 0.16 226.017)}.u{color:oklch(74"
-        ".3% 0.213 50.613)}.t{color:oklch(61.52% 0.224 256.099)}.s{color:oklch(62.61% 0.282 29.234)"
-        "}}</style><rect ";
+        ".59% 0.042 250.64)!important}.y{color:oklch(60.59% 0.306 309.33)!important}.x{color:oklch("
+        "69.45% 0.219 157.46)!important}.w{color:oklch(75.22% 0.277 327.48)!important}.v{color:oklc"
+        "h(77.86% 0.16 226.017)!important}.u{color:oklch(74.3% 0.213 50.613)!important}.t{color:okl"
+        "ch(61.52% 0.224 256.099)!important}.s{color:oklch(62.61% 0.282 29.234)!important}}</style>"
+        "<rect ";
 
     /// @notice Ending string for the SVG.
     string constant SVG_END = "</pre></foreignObject></svg>";
