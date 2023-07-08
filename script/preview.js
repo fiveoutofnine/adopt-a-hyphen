@@ -13,11 +13,25 @@ exec("forge script script/PrintAdoptAHyphenScript.s.sol:PrintAdoptAHyphenScript 
         return;
     }
     
-    // Regular expression to match base64 encoded SVGs
-    const regex = /data:image\/svg\+xml;base64,[a-zA-Z0-9+/]+=*/g;
+    const regex = /data:application\/json;base64,[a-zA-Z0-9+/]+=*/g;
+    const base64Jsons = stdout.match(regex);
+    const matches = [];
 
-    // Find all matches
-    const matches = stdout.match(regex);
+    base64Jsons?.forEach(base64Json => {
+        const startIndex = base64Json.indexOf(',') + 1;
+        const encodedJson = base64Json.slice(startIndex);
+  
+        try {
+            const decodedJson = atob(encodedJson);
+            const parsedJson = JSON.parse(decodedJson);
+    
+            if(parsedJson.image_data !== undefined) {
+                matches.push(parsedJson.image_data);
+            }
+        } catch(e) {
+            console.error('Error in decoding/parsing JSON:', e);
+        }
+    });
 
     // Specify the directory
     const dir = path.join(__dirname, 'preview');
