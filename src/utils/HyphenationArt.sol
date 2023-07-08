@@ -129,7 +129,7 @@ library HyphenationArt {
     bytes32 constant HEADS_LEFT = "|[({";
 
     /// @notice Characters corresponding to the `head` trait's right characters.
-    bytes32 constant HEADS_RIGHT = "|]})";
+    bytes32 constant HEADS_RIGHT = "|])}";
 
     /// @notice Characters corresponding to the `eye` trait's characters.
     bytes32 constant EYES = "\"#$'*+-.0=OTX^oxz";
@@ -137,19 +137,25 @@ library HyphenationArt {
     /// @notice Characters corresponding to the `hat` trait's characters.
     /// @dev An index of 0 corresponds to no hat trait, so the character at
     /// index 0 can be anything, but we just made it a space here.
+    /// @dev If the hat character is `&` (i.e. index of `5`), then it must be
+    /// drawn in its entity form, i.e. `&amp;`.
     bytes32 constant HATS = " !#$%&'*+-.=@^~";
 
     /// @notice Characters corresponding to the `arm` trait's left characters.
+    /// @dev If the arm character is `<` (i.e. index of `1`), then it must be
+    /// drawn in its entity form, i.e. `&lt;`.
     bytes32 constant ARMS_LEFT = "/<~J2";
 
     /// @notice Characters corresponding to the `arm` trait's right characters.
+    /// @dev If the arm character is `>` (i.e. index of `1`), then it must be
+    /// drawn in its entity form, i.e. `&gt;`.
     bytes32 constant ARMS_RIGHT = "\\>~L7";
 
     /// @notice Characters corresponding to the `body` trait's left characters.
     bytes32 constant BODIES_LEFT = "[({";
 
     /// @notice Characters corresponding to the `body` trait's right characters.
-    bytes32 constant BODIES_RIGHT = "])}";
+    bytes32 constant BODIES_RIGHT = "})]";
 
     /// @notice Characters corresponding to the `chest` trait's characters.
     /// @dev An index of 0 corresponds to no chest trait, so the character at
@@ -319,7 +325,11 @@ library HyphenationArt {
                 if (i == 172) {
                     charStr = string.concat(
                         charStr,
-                        string(abi.encodePacked(HATS[hyphenGuy.hat])),
+                        // If the hat character is `&`, we need to draw it as
+                        // its entity form.
+                        hyphenGuy.hat != 5
+                            ? string(abi.encodePacked(HATS[hyphenGuy.hat]))
+                            : "&amp;",
                         hyphenGuy.hat != 0 ? "" : " ",
                         "  \n"
                     );
@@ -336,7 +346,11 @@ library HyphenationArt {
                 } else if (i == 128) {
                     charStr = string.concat(
                         charStr,
-                        string(abi.encodePacked(ARMS_LEFT[hyphenGuy.arm])),
+                        // If the arm character is `<`, we need to draw it as
+                        // its entity form.
+                        hyphenGuy.arm != 1
+                            ? string(abi.encodePacked(ARMS_LEFT[hyphenGuy.arm]))
+                            : "&lt;",
                         string(abi.encodePacked(BODIES_LEFT[hyphenGuy.body]))
                     );
                     {
@@ -346,7 +360,13 @@ library HyphenationArt {
                             string(
                                 abi.encodePacked(BODIES_RIGHT[hyphenGuy.body])
                             ),
-                            string(abi.encodePacked(ARMS_RIGHT[hyphenGuy.arm])),
+                            // If the arm character is `>`, we need to draw it as
+                            // its entity form.
+                            hyphenGuy.arm != 1
+                                ? string(
+                                    abi.encodePacked(ARMS_RIGHT[hyphenGuy.arm])
+                                )
+                                : "&gt;",
                             "\n"
                         );
                     }
@@ -372,7 +392,7 @@ library HyphenationArt {
                                 // Select a random background if `chaosBg` is
                                 // true.
                                 hyphenGuy.chaosBg
-                                    ? prng.state % BACKGROUNDS.length
+                                    ? prng.state % 9
                                     : hyphenGuy.background
                             ]
                         )
@@ -415,7 +435,7 @@ library HyphenationArt {
                                             COLOR_CLASSES[hyphenGuy.color]
                                         )
                                     ),
-                                    '"'
+                                    '" '
                                 )
                                 : "",
                             'width="150" height="150" rx="6" fill="',
