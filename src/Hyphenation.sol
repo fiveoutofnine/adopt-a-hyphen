@@ -3,7 +3,9 @@ pragma solidity ^0.8.17;
 
 import {ERC721} from "solmate/tokens/ERC721.sol";
 import {Owned} from "solmate/auth/Owned.sol";
+import {Base64} from "./utils/Base64.sol";
 import {HyphenationArt} from "./utils/HyphenationArt.sol";
+import {HyphenationMetadata} from "./utils/HyphenationMetadata.sol";
 
 /// @title Hyphenation
 contract Hyphenation is ERC721, Owned {
@@ -34,9 +36,29 @@ contract Hyphenation is ERC721, Owned {
     ) public view override returns (string memory) {
         require(_ownerOf[_tokenId] != address(0), "ERC721: TOKEN_UNMINTED");
 
+        // Seed to generate the art and metadata from.
+        uint256 seed = uint256(keccak256(abi.encodePacked(_tokenId)));
+
+        // Generate the metadata.
+        string memory name = HyphenationMetadata.generateName(seed);
+        string memory attributes = HyphenationMetadata.generateAttributes(seed);
+
         return
-            HyphenationArt.render(
-                uint256(keccak256(abi.encodePacked(_tokenId)))
+            string.concat(
+                "data:application/json;base64,",
+                Base64.encode(
+                    abi.encodePacked(
+                        '{"name":"',
+                        name,
+                        '","image_data":"data:image/svg+xml;base64,',
+                        Base64.encode(
+                            abi.encodePacked(HyphenationArt.render(seed))
+                        ),
+                        '","attributes":',
+                        attributes,
+                        "}"
+                    )
+                )
             );
     }
 }
