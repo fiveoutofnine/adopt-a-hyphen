@@ -60,10 +60,10 @@ library AdoptAHyphenArt {
     /// characters each into a 600px square container with 32px padding on each
     /// side. Martian Mono comes with an overhead of 12px above each character,
     /// and 0px on either side, so effectively, we want to fit in
-    /// `22.4px/character * 44 characters` into a `600 - 32 * 2 + 12` = 548px tall
+    /// `22.4px/character * 11 characters` into a `600 - 32 * 2 + 12` = 548px tall
     /// container, and `38px/character * 23 characters` into a `600 - 32 * 2` =
     /// 536px wide container. Therefore, we calculate 51px for the
-    /// `line-height` property: `38 + (548 - 38 * 44) / (44 - 4) = 51`.
+    /// `line-height` property: `38 + (548 - 38 * 11) / (11 - 1) = 51`.
     /// Similarly, we calculate 0.904348px for the `letter-spacing` property:
     /// `(536 - 23 * 22.4) / 22 ≈ 0.904348`. We set these properties on the `pre`
     /// element.
