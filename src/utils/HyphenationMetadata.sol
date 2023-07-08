@@ -13,6 +13,9 @@ library HyphenationMetadata {
     /// because we don't want to use the same bits to generate the metadata.
     uint256 constant BITS_USED = 47;
 
+    /// @notice Generates a Hyphen Guy name.
+    /// @param _seed Seed to select traits for the Hyphen Guy.
+    /// @return Hyphen Guy's name.
     function generateName(uint256 _seed) internal pure returns (string memory) {
         string[] memory ADJECTIVES = new string[](100);
         ADJECTIVES[0] = "all-important";
@@ -154,10 +157,13 @@ library HyphenationMetadata {
             string.concat(
                 ADJECTIVES[_seed % 100],
                 " ",
-                FIRST_NAMES[(_seed >> 7) % 30]
+                FIRST_NAMES[(_seed >> 7) % 30] // Adjectives used 7 bits
             );
     }
 
+    /// @notice Generates a Hyphen Guy's attributes.
+    /// @param _seed Seed to select traits for the Hyphen Guy.
+    /// @return Hyphen Guy's attributes.
     function generateAttributes(
         uint256 _seed
     ) internal pure returns (string memory) {
