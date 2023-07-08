@@ -230,7 +230,7 @@ library AdoptAHyphenArt {
         prng.state >>= 10;
         hyphenGuy.inverted = prng.state & 3 == 0; // 12.5% chance (3 bits)
         prng.state >>= 3;
-        hyphenGuy.color = uint8(prng.state & 3); // 8 colors (3 bits)
+        hyphenGuy.color = uint8(prng.state & 7); // 8 colors (3 bits)
 
         // Get the next state in the PRNG.
         prng.state = prng.next();

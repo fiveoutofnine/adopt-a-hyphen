@@ -207,7 +207,7 @@ library AdoptAHyphenMetadata {
 
         // The bits used to determine the color value are bits [43, 45]
         // (0-indexed). See {AdoptAHyphenArt.render} for more information.
-        uint256 color = (_seed >> 43) & 3;
+        uint256 color = (_seed >> 43) & 7;
 
         // The art renderer uses the last `BITS_USED` bits to generate its
         // traits, and `generateName` uses 12 bits to generate the name, so we
