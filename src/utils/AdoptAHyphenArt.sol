@@ -381,7 +381,7 @@ library AdoptAHyphenArt {
                         "_"
                     );
                 }
-            } else if ((bgBitmap >> i) & 1 == 0) {
+            } else if ((bgBitmap >> i) & 1 != 0) {
                 // We make use of the `bgBitmap` generated earlier from the
                 // intensity value here. If the check above passed, it means a
                 // background character must be drawn here.
