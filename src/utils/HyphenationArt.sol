@@ -3,10 +3,11 @@ pragma solidity ^0.8.17;
 
 import {LibPRNG} from "solady/utils/LibPRNG.sol";
 import {LibString} from "solady/utils/LibString.sol";
-import {Base64} from "./Base64.sol";
 
 /// @title HyphenationArt
 /// @notice A library for generating SVGs for {Hyphenation}.
+/// @dev For this library to be correct, all `_seed` values must be consistent
+/// with every function in both {HyphenationArt} and {HyphenationMetadata}.
 library HyphenationArt {
     using LibPRNG for LibPRNG.PRNG;
     using LibString for uint256;
@@ -224,7 +225,7 @@ library HyphenationArt {
         hyphenGuy.chaosBg = prng.state & 3 == 0; // 25% chance (2 bits)
         prng.state >>= 2;
         hyphenGuy.intensity = uint8(
-            prng.state & 3 == 0 ? 252 : prng.state % 253
+            prng.state & 3 == 0 ? prng.state % 253 : 252
         ); // 25% chance + 253 intensities (2 + 8 = 10 bits)
         prng.state >>= 10;
         hyphenGuy.inverted = prng.state & 3 == 0; // 12.5% chance (3 bits)
@@ -422,69 +423,53 @@ library HyphenationArt {
 
         return
             string.concat(
-                "data:image/svg+xml;base64,",
-                Base64.encode(
-                    abi.encodePacked(
-                        string.concat(
-                            SVG_START,
-                            hyphenGuy.inverted
-                                ? string.concat(
-                                    'class="',
-                                    string(
-                                        abi.encodePacked(
-                                            COLOR_CLASSES[hyphenGuy.color]
-                                        )
-                                    ),
-                                    '" '
-                                )
-                                : "",
-                            'width="150" height="150" rx="6" fill="',
-                            hyphenGuy.inverted ? colorHexString : "#FFF",
-                            // `x` is `8` because we want a left padding of 8px.
-                            // `y` is `5` because the Martian Mono font has an
-                            // overhead of 3px, and we want a top padding of
-                            // 8px. Thus, by setting it to `8 - 3` = 5px, we
-                            // align the top of the letters with 8px down from
-                            // the top of the SVG. `width` is `134` because we
-                            // want left/right padding of 8px:
-                            // `150 - 8*2 = 134`. Finally, `height` is `140.25`
-                            // because we have 11 lines, and each line is 12.75
-                            // pixels tall: `11 * 12.75 = 140.25`.
-                            '"/><foreignObject x="8" y="5" width="134" height="140.25"><pre style="'
-                            'color:rgba(0,0,0,0.05)" xmlns="http://www.w3.org/1999/xhtml">',
-                            bgStr,
-                            // Recall that ``N'' was not accounted for in the
-                            // loop because we didn't look at index 0, so we
-                            // draw it here. `x` is `8` for the same reason
-                            // outlined in the previous comment. `y` is `43.25`
-                            // because the character starts 3 lines below the
-                            // first (`3 * 12.75 = 38.25`), and we have the same
-                            // 5px overhead as before, so `38.25 + 5 = 43.25`.
-                            // `width` is `134` for the same reason. Finally,
-                            // `height` is `51` because the character is 4 lines
-                            // tall, and each line is 12.75 pixels tall:
-                            // `4 * 12.75 = 51`.
-                            'N</pre></foreignObject><foreignObject x="8" y="43.25" width="134" heig'
-                            'ht="51"><pre',
-                            hyphenGuy.inverted
-                                ? ""
-                                : string.concat(
-                                    ' class="',
-                                    string(
-                                        abi.encodePacked(
-                                            COLOR_CLASSES[hyphenGuy.color]
-                                        )
-                                    ),
-                                    '"'
-                                ),
-                            ' style="color:',
-                            hyphenGuy.inverted ? "#FFF" : colorHexString,
-                            '" xmlns="http://www.w3.org/1999/xhtml">',
-                            charStr,
-                            SVG_END
-                        )
+                SVG_START,
+                hyphenGuy.inverted
+                    ? string.concat(
+                        'class="',
+                        string(
+                            abi.encodePacked(COLOR_CLASSES[hyphenGuy.color])
+                        ),
+                        '" '
                     )
-                )
+                    : "",
+                'width="150" height="150" rx="6" fill="',
+                hyphenGuy.inverted ? colorHexString : "#FFF",
+                // `x` is `8` because we want a left padding of 8px. `y` is `5`
+                // because the Martian Mono font has an overhead of 3px, and we
+                // want a top padding of 8px. Thus, by setting it to `8 - 3` =
+                // 5px, we align the top of the letters with 8px down from the
+                // top of the SVG. `width` is `134` because we want left/right
+                // padding of 8px: `150 - 8*2 = 134`. Finally, `height` is
+                // `140.25` because we have 11 lines, and each line is 12.75
+                // pixels tall: `11 * 12.75 = 140.25`.
+                '"/><foreignObject x="8" y="5" width="134" height="140.25"><pre style="color:rgba(0'
+                ',0,0,0.05)" xmlns="http://www.w3.org/1999/xhtml">',
+                bgStr,
+                // Recall that ``N'' was not accounted for in the loop because
+                // we didn't look at index 0, so we draw it here. `x` is `8` for
+                // the same reason outlined in the previous comment. `y` is
+                // `43.25` because the character starts 3 lines below the first
+                // (`3 * 12.75 = 38.25`), and we have the same 5px overhead as
+                // before, so `38.25 + 5 = 43.25`. `width` is `134` for the same
+                // reason. Finally, `height` is `51` because the character is 4
+                // lines tall, and each line is 12.75 pixels tall:
+                // `4 * 12.75 = 51`.
+                'N</pre></foreignObject><foreignObject x="8" y="43.25" width="134" height="51"><pre',
+                hyphenGuy.inverted
+                    ? ""
+                    : string.concat(
+                        ' class="',
+                        string(
+                            abi.encodePacked(COLOR_CLASSES[hyphenGuy.color])
+                        ),
+                        '"'
+                    ),
+                ' style="color:',
+                hyphenGuy.inverted ? "#FFF" : colorHexString,
+                '" xmlns="http://www.w3.org/1999/xhtml">',
+                charStr,
+                SVG_END
             );
     }
 }
