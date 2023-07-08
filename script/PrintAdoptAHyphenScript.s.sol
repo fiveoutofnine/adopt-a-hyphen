@@ -17,7 +17,7 @@ contract PrintAdoptAHyphenScript is Script {
     function setUp() public {
         adoptAFriend = new AdoptAHyphen(address(0xC0FFEE));
         for (uint256 i; i < 10000; ) {
-            adoptAFriend.mint();
+            // adoptAFriend.mint(i);
             unchecked {
                 ++i;
             }
@@ -27,7 +27,7 @@ contract PrintAdoptAHyphenScript is Script {
     /// @notice Prints the token URIs for tokens #1 through #15.
     function run() public view {
         for (uint256 i = 1; i < 100; i++) {
-            console.log(adoptAFriend.tokenURI(i));
+            // console.log(adoptAFriend.tokenURI(i));
         }
     }
 }
