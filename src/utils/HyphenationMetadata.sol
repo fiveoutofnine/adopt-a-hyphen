@@ -6,6 +6,8 @@ import {HyphenationArt} from "./HyphenationArt.sol";
 
 /// @title HyphenationMetadata
 /// @notice A library for generating metadata for {Hyphenation}.
+/// @dev For this library to be correct, all `_seed` values must be consistent
+/// with every function in both {HyphenationArt} and {HyphenationMetadata}.
 library HyphenationMetadata {
     using LibString for uint256;
 

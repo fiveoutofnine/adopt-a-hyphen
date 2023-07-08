@@ -6,6 +6,8 @@ import {LibString} from "solady/utils/LibString.sol";
 
 /// @title HyphenationArt
 /// @notice A library for generating SVGs for {Hyphenation}.
+/// @dev For this library to be correct, all `_seed` values must be consistent
+/// with every function in both {HyphenationArt} and {HyphenationMetadata}.
 library HyphenationArt {
     using LibPRNG for LibPRNG.PRNG;
     using LibString for uint256;
@@ -441,8 +443,8 @@ library HyphenationArt {
                 // padding of 8px: `150 - 8*2 = 134`. Finally, `height` is
                 // `140.25` because we have 11 lines, and each line is 12.75
                 // pixels tall: `11 * 12.75 = 140.25`.
-                '"/><foreignObject x="8" y="5" width="134" height="140.25"><pre style="'
-                'color:rgba(0,0,0,0.05)" xmlns="http://www.w3.org/1999/xhtml">',
+                '"/><foreignObject x="8" y="5" width="134" height="140.25"><pre style="color:rgba(0'
+                ',0,0,0.05)" xmlns="http://www.w3.org/1999/xhtml">',
                 bgStr,
                 // Recall that ``N'' was not accounted for in the loop because
                 // we didn't look at index 0, so we draw it here. `x` is `8` for
@@ -453,8 +455,7 @@ library HyphenationArt {
                 // reason. Finally, `height` is `51` because the character is 4
                 // lines tall, and each line is 12.75 pixels tall:
                 // `4 * 12.75 = 51`.
-                'N</pre></foreignObject><foreignObject x="8" y="43.25" width="134" heig'
-                'ht="51"><pre',
+                'N</pre></foreignObject><foreignObject x="8" y="43.25" width="134" height="51"><pre',
                 hyphenGuy.inverted
                     ? ""
                     : string.concat(
