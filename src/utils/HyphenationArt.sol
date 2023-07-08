@@ -43,6 +43,8 @@ library HyphenationArt {
         uint8 background;
         bool chaosBg;
         uint8 intensity;
+        bool inverted;
+        uint8 color;
     }
 
     // -------------------------------------------------------------------------
@@ -50,6 +52,20 @@ library HyphenationArt {
     // -------------------------------------------------------------------------
 
     /// @notice Starting string for the SVG.
+    /// @dev The `line-height` attribute for `pre` elements is set to `12.75px`
+    /// because we want to fit in 11 lines into a `150 - 8 * 2 + 3` = 137px tall
+    /// container. At 8px, the Martian Mono Extra Bold font has a width of 5.6px
+    /// and a height of 9.5px. Additionally, we want to fit 11 lines with 23
+    /// characters each into a 150px square container with 8px padding on each
+    /// side. Martian Mono comes with an overhead of 3px above each character,
+    /// and 0px on either side, so effectively, we want to fit in
+    /// `5.6px/character * 11 characters` into a `150 - 8 * 2 + 3` = 137px tall
+    /// container, and `9.5px/character * 23 characters` into a `150 - 8 * 2` =
+    /// 134px wide container. Therefore, we calculate 12.75px for the
+    /// `line-height` property: `9.5 + (137 - 9.5 * 11) / (11 - 1) = 12.75`.
+    /// Similarly, we calculate 0.226087px for the `letter-spacing` property:
+    /// `(134 - 23 * 5.6) / 22 ≈ 0.226087`. We set these properties on the `pre`
+    /// element.
     string constant SVG_START =
         '<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><st'
         "yle>@font-face{font-family:A;src:url(data:font/woff2;utf-8;base64,d09GMgABAAAAAAv4ABAAAAAA"
@@ -98,11 +114,16 @@ library HyphenationArt {
         "uZSn0OfD6fBSvuAolggkprABAUTpgaUETCaWesM3bi2Ch78XJQYNmTbCqUu3MRyV9CLBMTrorFmr1YgxTLUaWOvBw8"
         "qDOAYj5T06tcsSRcZBd7t1R4zixMcjo4dI21xp0nRxBn/3uDap2g3ql6bTBKc+/a3oUa/t34w3oQeJMlM+jNy82KA+"
         "HVbr1GVcH79cKVV6FuSpU28mK5MXS802lgKzHItxhodxarDksKiHly4LnTqM9cExdQ+bfAj+oD48AADPLioAkda+TD"
-        "w3f9F3AAAAAA==)}text{font-family:A;font-size:8px;text-anchor:left;letter-spacing:0.236364p"
-        "x;dominant-baseline:central;white-space:pre;line-height:12.6px}.a{fill:";
+        "w3f9F3AAAAAA==)}pre{font-family:A;font-size:8px;text-align:center;margin:0;letter-spacing:"
+        "0.226087px;line-height:12.75px}@supports (color:color(display-p3 1 1 1)){.z{color:oklch(79"
+        ".59% 0.042 250.64)!important}.y{color:oklch(60.59% 0.306 309.33)!important}.x{color:oklch("
+        "69.45% 0.219 157.46)!important}.w{color:oklch(75.22% 0.277 327.48)!important}.v{color:oklc"
+        "h(77.86% 0.16 226.017)!important}.u{color:oklch(74.3% 0.213 50.613)!important}.t{color:okl"
+        "ch(61.52% 0.224 256.099)!important}.s{color:oklch(62.61% 0.282 29.234)!important}}</style>"
+        "<rect ";
 
     /// @notice Ending string for the SVG.
-    string constant SVG_END = "</text></svg>";
+    string constant SVG_END = "</pre></foreignObject></svg>";
 
     /// @notice Characters corresponding to the `head` trait's left characters.
     bytes32 constant HEADS_LEFT = "|[({";
@@ -150,6 +171,17 @@ library HyphenationArt {
     /// here.
     bytes32 constant CHAIN_REVERSED = "NIAHC";
 
+    /// @notice Bitpacked integer of 32-bit words containing 24-bit colors.
+    /// @dev The first 8 bits in each word are unused, but we made each word
+    /// 32-bit so we can calculate the bit index via `<< 5`, rather than `* 24`.
+    uint256 constant COLORS =
+        0xA9BFD700AD43ED0000BA7300FE63FF0000C9FF00FF8633000080FF00FE0000;
+
+    /// @notice Utility string for converting targetting classes that provide
+    /// p3 color support (see classes `s` through `z` in `SVG_START`'s `<style>`
+    /// block).
+    bytes32 constant COLOR_CLASSES = "stuvwxyz";
+
     // -------------------------------------------------------------------------
     // `render`
     // -------------------------------------------------------------------------
@@ -188,6 +220,10 @@ library HyphenationArt {
         hyphenGuy.intensity = uint8(
             prng.state & 3 == 0 ? 252 : prng.state % 253
         ); // 25% chance + 253 intensities (2 + 8 = 10 bits)
+        prng.state >>= 10;
+        hyphenGuy.inverted = prng.state & 3 == 0; // 12.5% chance (3 bits)
+        prng.state >>= 3;
+        hyphenGuy.color = uint8(prng.state & 3); // 8 colors (3 bits)
 
         // Get the next state in the PRNG.
         prng.state = prng.next();
@@ -357,6 +393,13 @@ library HyphenationArt {
             }
         }
 
+        string memory colorHexString = string.concat(
+            "#",
+            ((COLORS >> (hyphenGuy.color << 5)) & 0xFFFFFF).toHexStringNoPrefix(
+                3
+            )
+        );
+
         return
             string.concat(
                 "data:image/svg+xml;base64,",
@@ -364,17 +407,59 @@ library HyphenationArt {
                     abi.encodePacked(
                         string.concat(
                             SVG_START,
-                            "rgba(0,0,0,0.05)", // Background text color.
-                            "}.b{fill:",
-                            "#AD43ED", // Hyphen Guy color.
-                            '}</style><rect width="150" height="150" rx="6" fill="',
-                            "white", // Background color
-                            '"/><text class="a" x="8" y="12">',
+                            hyphenGuy.inverted
+                                ? string.concat(
+                                    'class="',
+                                    string(
+                                        abi.encodePacked(
+                                            COLOR_CLASSES[hyphenGuy.color]
+                                        )
+                                    ),
+                                    '"'
+                                )
+                                : "",
+                            'width="150" height="150" rx="6" fill="',
+                            hyphenGuy.inverted ? colorHexString : "#FFF",
+                            // `x` is `8` because we want a left padding of 8px.
+                            // `y` is `5` because the Martian Mono font has an
+                            // overhead of 3px, and we want a top padding of
+                            // 8px. Thus, by setting it to `8 - 3` = 5px, we
+                            // align the top of the letters with 8px down from
+                            // the top of the SVG. `width` is `134` because we
+                            // want left/right padding of 8px:
+                            // `150 - 8*2 = 134`. Finally, `height` is `140.25`
+                            // because we have 11 lines, and each line is 12.75
+                            // pixels tall: `11 * 12.75 = 140.25`.
+                            '"/><foreignObject x="8" y="5" width="134" height="140.25"><pre style="'
+                            'color:rgba(0,0,0,0.05)" xmlns="http://www.w3.org/1999/xhtml">',
                             bgStr,
                             // Recall that ``N'' was not accounted for in the
                             // loop because we didn't look at index 0, so we
-                            // draw it here.
-                            'N</text><text class="b" x="60.527" y="49.8">',
+                            // draw it here. `x` is `8` for the same reason
+                            // outlined in the previous comment. `y` is `43.25`
+                            // because the character starts 3 lines below the
+                            // first (`3 * 12.75 = 38.25`), and we have the same
+                            // 5px overhead as before, so `38.25 + 5 = 43.25`.
+                            // `width` is `134` for the same reason. Finally,
+                            // `height` is `51` because the character is 4 lines
+                            // tall, and each line is 12.75 pixels tall:
+                            // `4 * 12.75 = 51`.
+                            'N</pre></foreignObject><foreignObject x="8" y="43.25" width="134" heig'
+                            'ht="51"><pre',
+                            hyphenGuy.inverted
+                                ? ""
+                                : string.concat(
+                                    ' class="',
+                                    string(
+                                        abi.encodePacked(
+                                            COLOR_CLASSES[hyphenGuy.color]
+                                        )
+                                    ),
+                                    '"'
+                                ),
+                            ' style="color:',
+                            hyphenGuy.inverted ? "#FFF" : colorHexString,
+                            '" xmlns="http://www.w3.org/1999/xhtml">',
                             charStr,
                             SVG_END
                         )
