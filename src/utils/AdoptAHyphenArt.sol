@@ -4,11 +4,11 @@ pragma solidity ^0.8.17;
 import {LibPRNG} from "solady/utils/LibPRNG.sol";
 import {LibString} from "solady/utils/LibString.sol";
 
-/// @title HyphenationArt
-/// @notice A library for generating SVGs for {Hyphenation}.
+/// @title AdoptAHyphenArt
+/// @notice A library for generating SVGs for {AdoptAHyphen}.
 /// @dev For this library to be correct, all `_seed` values must be consistent
-/// with every function in both {HyphenationArt} and {HyphenationMetadata}.
-library HyphenationArt {
+/// with every function in both {AdoptAHyphenArt} and {AdoptAHyphenMetadata}.
+library AdoptAHyphenArt {
     using LibPRNG for LibPRNG.PRNG;
     using LibString for uint256;
 

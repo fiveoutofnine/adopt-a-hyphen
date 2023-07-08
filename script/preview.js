@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Run the forge script
-exec("forge script script/PrintHyphenationScript.s.sol:PrintHyphenationScript -vvv", (error, stdout, stderr) => {
+exec("forge script script/PrintAdoptAHyphenScript.s.sol:PrintAdoptAHyphenScript -vvv", (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
         return;
