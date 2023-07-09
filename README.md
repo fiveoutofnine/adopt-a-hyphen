@@ -92,7 +92,7 @@ make
 
 To compute the constructor arguments, you can copy paste the last 128 characters from `bytecode-with-constructor.txt` (remember to run `print-bytecode.sh` with the correct constructor arguments set first!) or run the following command:
 
-```
+```sh
 cast abi-encode "constructor(address,address)" $HYPHEN_NFT_CONTRACT_ADDRESS $OWNER
 ```
 
