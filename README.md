@@ -1,8 +1,8 @@
 # Adopt-a-Hyphen
 
-[**Site**](https://partyvs.party/) - [**Party**](https://www.party.app/party/0x1c409297dd82167B6be3e79D4bF0B6f7a6ff0dB4) - [**Tweet**](https://twitter.com/prtyDAO/status/1674447750182719489) - [**hyphenation**](https://hyphenation.vercel.app) / [**scotato/hyphenation**](https://github.com/scotato/hyphenation)
+[**Site**](https://adopt-a-hyphen.com) - [**Party**](https://www.party.app/party/0x1c409297dd82167B6be3e79D4bF0B6f7a6ff0dB4) - [**hyphenation**](https://hyphenation.vercel.app) / [**scotato/hyphenation**](https://github.com/scotato/hyphenation)
 
-adopt a hyphenated friend: exchange an [**On-Chain NFT**](https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1) to mint a hyphenated friend.
+Adopt a Hyphen: exchange an on-chain [**Adoption Ticket**](https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1) to redeem your [**hyphen**](http://adopt-a-hyphen.com/).
 
 > With each passing day, more and more people are switching from “on-chain” to “onchain.” While this may seem like a harmless choice, thousands of innocent hyphens are losing their place in the world. No longer needed to hold “on-chain” together, these hyphens are in need of a loving place to call home. What if you could make a difference in a hyphen’s life forever?
 
@@ -29,7 +29,7 @@ adopt a hyphenated friend: exchange an [**On-Chain NFT**](https://zora.co/collec
             <td><a href="https://etherscan.io/address/0x2010009c4842e6B6d2630A07Dd6469172affb4dc"><code>0x2010009c4842e6B6d2630A07Dd6469172affb4dc</code></a></td><td>7777777</td><td><code>v0.8.17+commit.8df45f5f</code></td>
         </tr>
         <tr>
-        <td><a href="https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1"><b>Zora NFT</b></a></td>
+        <td><a href="https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1"><b>Adoption Ticket</b></a></td>
             <td><code><a href="https://etherscan.io/address/0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1">0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1</code></td><td>5000</td><td><code>v0.8.17+commit.8df45f5f</code></td>
         </tr>
         <tr>
