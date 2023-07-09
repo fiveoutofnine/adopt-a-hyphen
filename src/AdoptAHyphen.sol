@@ -13,6 +13,29 @@ import {AdoptAHyphenMetadata} from "./utils/AdoptAHyphenMetadata.sol";
 /// @notice Adopt a Hyphen: exchange a Hyphen NFT into this contract to mint a
 /// Hyphen Guy.
 contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
+    // -------------------------------------------------------------------------
+    // Constants
+    // -------------------------------------------------------------------------
+
+    /// @notice Description of the collection.
+    string constant COLLECTION_DESCRIPTION =
+        unicode"With each passing day, more and more people are switching from "
+        unicode"“on-chain” to “onchain.” While this may seem like a harmless ch"
+        unicode"oice, thousands of innocent hyphens are losing their place in t"
+        unicode"he world. No longer needed to hold “on-chain” together, these h"
+        unicode"yphens are in need of a loving place to call home. What if you "
+        unicode"could make a difference in a hyphen’s life forever?\\n\\nIntroduc"
+        unicode"ing the Adopt-a-Hyphen program, where you can adopt a hyphen an"
+        unicode"d give it a new home...right in your wallet! Each hyphen in thi"
+        unicode"s collection was adopted via an on-chain mint and is now safe a"
+        unicode"nd sound in this collection. As is their nature, each hyphen li"
+        unicode"ves fully on-chain and is rendered in Solidity as cute, generat"
+        unicode"ive ASCII art.";
+
+    // -------------------------------------------------------------------------
+    // Immutable storage
+    // -------------------------------------------------------------------------
+
     /// @notice The Hyphen NFT contract that must be transferred into this
     /// contract in order to mint a token.
     IERC721 public immutable override hyphenNft;
@@ -69,6 +92,8 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
                     abi.encodePacked(
                         '{"name":"',
                         name,
+                        '","description":"',
+                        COLLECTION_DESCRIPTION,
                         '","image_data":"data:image/svg+xml;base64,',
                         Base64.encode(
                             abi.encodePacked(AdoptAHyphenArt.render(seed))
@@ -76,6 +101,25 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
                         '","attributes":',
                         attributes,
                         "}"
+                    )
+                )
+            );
+    }
+
+    // -------------------------------------------------------------------------
+    // Contract metadata
+    // -------------------------------------------------------------------------
+
+    /// @inheritdoc IAdoptAHyphen
+    function contractURI() external pure override returns (string memory) {
+        return
+            string.concat(
+                "data:application/json;base64,",
+                Base64.encode(
+                    abi.encodePacked(
+                        '{"name":"Adopt-a-Hyphen","description":"',
+                        COLLECTION_DESCRIPTION,
+                        '"}'
                     )
                 )
             );
