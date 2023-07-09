@@ -13,12 +13,12 @@ This project uses [**Foundry**](https://github.com/foundry-rs/foundry) as its de
 First, make sure you have Foundry installed. Then, run the following commands to clone the repo and install its dependencies:
 
 ```sh
-git clone https://github.com/fiveoutofnine/adopt-a-friend.git
-cd adopt-a-friend
+git clone https://github.com/fiveoutofnine/adopt-a-hyphen.git
+cd adopt-a-hyphen
 forge install
 ```
 
-To test the metadata output, follow the instructions in [`PrintAdoptAHyphenScript`](https://github.com/fiveoutofnine/adopt-a-friend/blob/main/script/PrintAdoptAHyphenScript.s.sol), and run the following command:
+To test the metadata output, follow the instructions in [`PrintAdoptAHyphenScript`](https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/script/PrintAdoptAHyphenScript.s.sol), and run the following command:
 
 ```sh
 forge script script/PrintAdoptAHyphenScript.s.sol:PrintAdoptAHyphenScript -vvv
