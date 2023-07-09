@@ -188,6 +188,8 @@ library AdoptAHyphenArt {
     bytes32 constant LEGS_RIGHT = "||\\\\";
 
     /// @notice Characters corresponding to the `background` trait's characters.
+    /// @dev If the background character is `\` (i.e. index of `6`), then it
+    /// must be escaped properly in JSONs, i.e. `\\\\`.
     bytes32 constant BACKGROUNDS = "#*+-/=\\|.";
 
     /// @notice Characters for the last few characters in the background that
