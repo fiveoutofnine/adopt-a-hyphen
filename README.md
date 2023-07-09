@@ -42,7 +42,7 @@ node script/preview.js
 
 2. [Optional] Copy the output saved to `bytecode-with-constructor.txt`, and compute the hash of it. [**Here**](https://emn178.github.io/online-tools/sha256.html) is a nice online tool for computing the hash.
 
-3. [Optional] Compute a `create2` salt to deploy with. Here's some basic steps to do that with [**johguse/ERADICATE2**]git(https://github.com/johguse/ERADICATE2)
+3. [Optional] Compute a `create2` salt to deploy with. Here's some basic steps to do that with [**johguse/ERADICATE2**](https://github.com/johguse/ERADICATE2)
 
 ```sh
 git clone https://github.com/johguse/ERADICATE2.git
