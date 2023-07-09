@@ -139,7 +139,7 @@ library AdoptAHyphenArt {
         "277 327.48)!important}.v{color:oklch(77.86% 0.16 226.017)!important}.u"
         "{color:oklch(74.3% 0.213 50.613)!important}.t{color:oklch(61.52% 0.224"
         " 256.099)!important}.s{color:oklch(62.61% 0.282 29.234)!important}}</s"
-        "tyle><rect ";
+        "tyle><path ";
 
     /// @notice Ending string for the SVG.
     string constant SVG_END = "</pre></foreignObject></svg>";
@@ -451,7 +451,7 @@ library AdoptAHyphenArt {
                         '" '
                     )
                     : "",
-                'width="600" height="600" fill="',
+                'd="M0 0h600v600H0z" fill="',
                 hyphenGuy.inverted ? colorHexString : "#FFF",
                 // `x` is `32` because we want a left padding of 32px. `y` is
                 // `20` because the Martian Mono font has an overhead of 12px,
