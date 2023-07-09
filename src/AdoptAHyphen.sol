@@ -30,7 +30,7 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
         unicode"his collection was adopted via an on-chain mint and is now safe"
         unicode" and sound in this collection. As is their nature, each hyphen "
         unicode"lives fully on-chain and is rendered in Solidity as cute, gener"
-        unicode"taive ASCII art.";
+        unicode"ative ASCII art.";
 
     // -------------------------------------------------------------------------
     // Immutable storage
