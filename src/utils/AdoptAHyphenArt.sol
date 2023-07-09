@@ -54,18 +54,21 @@ library AdoptAHyphenArt {
 
     /// @notice Starting string for the SVG.
     /// @dev The `line-height` attribute for `pre` elements is set to `51px`
-    /// because we want to fit in 11 lines into a `600 - 32 * 2 + 12` = 548px tall
-    /// container. At 32px, the Martian Mono Extra Bold font has a width of 22.4px
-    /// and a height of 38px. Additionally, we want to fit 11 lines with 23
-    /// characters each into a 600px square container with 32px padding on each
-    /// side. Martian Mono comes with an overhead of 12px above each character,
-    /// and 0px on either side, so effectively, we want to fit in
-    /// `22.4px/character * 11 characters` into a `600 - 32 * 2 + 12` = 548px tall
-    /// container, and `38px/character * 23 characters` into a `600 - 32 * 2` =
-    /// 536px wide container. Therefore, we calculate 51px for the
-    /// `line-height` property: `38 + (548 - 38 * 11) / (11 - 1) = 51`.
-    /// Similarly, we calculate 0.904348px for the `letter-spacing` property:
-    /// `(536 - 23 * 22.4) / 22 ≈ 0.904348`. We set these properties on the `pre`
+    /// because we want to fit in 11 lines into a `600 - 32 * 2 + 12` = 548px
+    /// tall container. At 32px, the Martian Mono Extra Bold font has a width of
+    /// 22.4px and a height of 38.5px. Additionally, we want to fit 11 lines
+    /// with 23 characters each into a 600px square container with 32px padding
+    /// on each side. Martian Mono comes with an overhead of 12px above each
+    /// character, and 0px on either side, so effectively, we want to fit in
+    /// `22.4px/character * 11 characters` into a `600 - 32 * 2 + 12` = 548px
+    /// tall container, and `38.5px/character * 23 characters` into a
+    /// `600 - 32 * 2` = 536px wide container. Therefore, we calculate 51px for
+    /// the `line-height` property:
+    /// `38.5 + (548 - 38.5 * 11) / (11 - 1) = 50.95 ≈ 51`. We round to `51`
+    /// because Safari doesn't support decimal values for `line-height`, so
+    /// technically, the text is off by `0.05 * 23` = 1.15px. Similarly, we
+    /// calculate 0.945 for the `letter-spacing` property:
+    /// `(536 - 23 * 22.4) / 22 ≈ 0.945`. We set these properties on the `pre`
     /// element.
     string constant SVG_START =
         '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><st'
@@ -116,7 +119,7 @@ library AdoptAHyphenArt {
         "qDOAYj5T06tcsSRcZBd7t1R4zixMcjo4dI21xp0nRxBn/3uDap2g3ql6bTBKc+/a3oUa/t34w3oQeJMlM+jNy82KA+"
         "HVbr1GVcH79cKVV6FuSpU28mK5MXS802lgKzHItxhodxarDksKiHly4LnTqM9cExdQ+bfAj+oD48AADPLioAkda+TD"
         "w3f9F3AAAAAA==)}pre{font-family:A;font-size:32px;text-align:center;margin:0;letter-spacing:"
-        "0.904348px;line-height:51px}@supports (color:color(display-p3 1 1 1)){.z{color:oklch(79"
+        "0.945px;line-height:51px}@supports (color:color(display-p3 1 1 1)){.z{color:oklch(79"
         ".59% 0.042 250.64)!important}.y{color:oklch(60.59% 0.306 309.33)!important}.x{color:oklch("
         "69.45% 0.219 157.46)!important}.w{color:oklch(75.22% 0.277 327.48)!important}.v{color:oklc"
         "h(77.86% 0.16 226.017)!important}.u{color:oklch(74.3% 0.213 50.613)!important}.t{color:okl"
@@ -156,7 +159,7 @@ library AdoptAHyphenArt {
     bytes32 constant BODIES_LEFT = "[({";
 
     /// @notice Characters corresponding to the `body` trait's right characters.
-    bytes32 constant BODIES_RIGHT = "})]";
+    bytes32 constant BODIES_RIGHT = "])}";
 
     /// @notice Characters corresponding to the `chest` trait's characters.
     /// @dev An index of 0 corresponds to no chest trait, so the character at
@@ -356,8 +359,8 @@ library AdoptAHyphenArt {
                             string(
                                 abi.encodePacked(BODIES_RIGHT[hyphenGuy.body])
                             ),
-                            // If the arm character is `>`, we need to draw it as
-                            // its entity form.
+                            // If the arm character is `>`, we need to draw it
+                            // as its entity form.
                             hyphenGuy.arm != 1
                                 ? string(
                                     abi.encodePacked(ARMS_RIGHT[hyphenGuy.arm])
@@ -430,27 +433,29 @@ library AdoptAHyphenArt {
                     : "",
                 'width="600" height="600" rx="6" fill="',
                 hyphenGuy.inverted ? colorHexString : "#FFF",
-                // `x` is `32` because we want a left padding of 32px. `y` is `20`
-                // because the Martian Mono font has an overhead of 12px, and we
-                // want a top padding of 32px. Thus, by setting it to `32 - 12` =
-                // 20px, we align the top of the letters with 32px down from the
-                // top of the SVG. `width` is `536` because we want left/right
-                // padding of 32px: `600 - 32*2 = 536`. Finally, `height` is
-                // `561` because we have 11 lines, and each line is 51
-                // pixels tall: `11 * 51 = 561`.
-                '"/><foreignObject x="32" y="20" width="536" height="561"><pre style="color:rgba(0'
-                ',0,0,0.05)" xmlns="http://www.w3.org/1999/xhtml">',
+                // `x` is `32` because we want a left padding of 32px. `y` is
+                // `20` because the Martian Mono font has an overhead of 12px,
+                // and we want a top padding of 32px. Thus, by setting it to
+                // `32 - 12` = 20px, we align the top of the letters with 32px
+                // down from the top of the SVG. `width` is `536` because we
+                // want left/right padding of 32px: `600 - 32*2 = 536`. Finally,
+                // `height` is `561` because we have 11 lines, and each line is
+                // 51 pixels tall: `11 * 51 = 561`.
+                '"/><foreignObject x="32" y="20" width="536" height="561"><pre '
+                'style="color:rgba(0,0,0,0.05)" xmlns="http://www.w3.org/1999/x'
+                'html">',
                 bgStr,
                 // Recall that ``N'' was not accounted for in the loop because
-                // we didn't look at index 0, so we draw it here. `x` is `32` for
-                // the same reason outlined in the previous comment. `y` is
+                // we didn't look at index 0, so we draw it here. `x` is `32`
+                // for the same reason outlined in the previous comment. `y` is
                 // `173` because the character starts 3 lines below the first
                 // (`3 * 51 = 153`), and we have the same 20px overhead as
                 // before, so `153 + 20 = 173`. `width` is `536` for the same
                 // reason. Finally, `height` is `204` because the character is 4
                 // lines tall, and each line is 51 pixels tall:
                 // `4 * 51 = 204`.
-                'N</pre></foreignObject><foreignObject x="32" y="173" width="536" height="204"><pre',
+                'N</pre></foreignObject><foreignObject x="32" y="173" width="53'
+                '6" height="204"><pre',
                 hyphenGuy.inverted
                     ? ""
                     : string.concat(

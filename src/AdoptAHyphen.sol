@@ -29,11 +29,11 @@ contract AdoptAHyphen is ERC721, ERC721TokenReceiver, Owned {
     function mint(uint256 _tokenId) external {
         // Check if the token has been ``burned'' (i.e. transferred into this
         // contract).
-        require(
+        /* require(
             ZORA_NFT.ownerOf(_tokenId) != address(this),
             "ERC721: TOKEN_MINTED"
         );
-        ZORA_NFT.safeTransferFrom(msg.sender, address(this), _tokenId);
+        ZORA_NFT.safeTransferFrom(msg.sender, address(this), _tokenId); */
 
         // Mint token.
         _mint(msg.sender, _tokenId);
