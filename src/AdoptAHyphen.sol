@@ -24,13 +24,13 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
         unicode"oice, thousands of innocent hyphens are losing their place in t"
         unicode"he world. No longer needed to hold “on-chain” together, these h"
         unicode"yphens are in need of a loving place to call home. What if you "
-        unicode"could make a difference in a hyphen’s life forever?\\n\\nIntroduc"
-        unicode"ing the Adopt-a-Hyphen program, where you can adopt a hyphen an"
-        unicode"d give it a new home...right in your wallet! Each hyphen in thi"
-        unicode"s collection was adopted via an on-chain mint and is now safe a"
-        unicode"nd sound in this collection. As is their nature, each hyphen li"
-        unicode"ves fully on-chain and is rendered in Solidity as cute, generat"
-        unicode"ive ASCII art.";
+        unicode"could make a difference in a hyphen’s life forever?\\n\\nIntrod"
+        unicode"ucing the Adopt-a-Hyphen program, where you can adopt a hyphen "
+        unicode"and give it a new home...right in your wallet! Each hyphen in t"
+        unicode"his collection was adopted via an on-chain mint and is now safe"
+        unicode" and sound in this collection. As is their nature, each hyphen "
+        unicode"lives fully on-chain and is rendered in Solidity as cute, gener"
+        unicode"taive ASCII art.";
 
     // -------------------------------------------------------------------------
     // Immutable storage
