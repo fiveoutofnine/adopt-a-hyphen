@@ -29,17 +29,15 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
 
     /// @inheritdoc IAdoptAHyphen
     function mint(uint256 _tokenId) external {
-        address tokenOwner = hyphenNft.ownerOf(_tokenId);
-
         // Revert if the token has been ``burned'' (i.e. transferred into this
         // contract).
-        if (tokenOwner == address(this)) revert TokenMinted();
+        if (hyphenNft.ownerOf(_tokenId) == address(this)) revert TokenMinted();
 
-        // Transfer the Zora NFT into this contract.
-        hyphenNft.safeTransferFrom(tokenOwner, address(this), _tokenId);
+        // Transfer the Hyphen NFT into this contract.
+        hyphenNft.safeTransferFrom(msg.sender, address(this), _tokenId);
 
         // Mint token.
-        _mint(tokenOwner, _tokenId);
+        _mint(msg.sender, _tokenId);
     }
 
     // -------------------------------------------------------------------------
