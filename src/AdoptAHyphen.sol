@@ -29,15 +29,17 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
 
     /// @inheritdoc IAdoptAHyphen
     function mint(uint256 _tokenId) external {
+        address tokenOwner = hyphenNft.ownerOf(_tokenId);
+
         // Revert if the token has been ``burned'' (i.e. transferred into this
         // contract).
-        if (hyphenNft.ownerOf(_tokenId) == address(this)) revert TokenMinted();
+        if (tokenOwner == address(this)) revert TokenMinted();
 
         // Transfer the Zora NFT into this contract.
-        hyphenNft.safeTransferFrom(msg.sender, address(this), _tokenId);
+        hyphenNft.safeTransferFrom(tokenOwner, address(this), _tokenId);
 
         // Mint token.
-        _mint(msg.sender, _tokenId);
+        _mint(tokenOwner, _tokenId);
     }
 
     // -------------------------------------------------------------------------
@@ -49,7 +51,7 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
         uint256 _tokenId
     ) public view override returns (string memory) {
         // Revert if the token hasn't been minted.
-        if (_ownerOf[_tokenId] != address(0)) revert TokenUnminted();
+        if (_ownerOf[_tokenId] == address(0)) revert TokenUnminted();
 
         // Seed to generate the art and metadata from.
         uint256 seed = uint256(keccak256(abi.encodePacked(_tokenId)));
