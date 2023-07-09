@@ -30,9 +30,9 @@ library AdoptAHyphenArt {
     /// @param chaosBg Whether the background is made up of multiple background
     /// characters, or just 1. 25% chance of being true.
     /// @param intensity Number of positions (out of 253 (`23 * 11`)) to fill
-    /// with a background character, a number in `[0, 252]`. 25% chance of being
-    /// `252`, which indicates no variable intensity (every empty position would
-    /// be filled). Equal chances amongst the other intensities.
+    /// with a background character, a number in `[50, 200]`. 25% chance of
+    /// being `252`, which indicates no variable intensity (every empty position
+    /// would be filled). Equal chances amongst the other intensities.
     struct HyphenGuy {
         uint8 head;
         uint8 eye;
@@ -228,8 +228,8 @@ library AdoptAHyphenArt {
         hyphenGuy.chaosBg = prng.state & 3 == 0; // 25% chance (2 bits)
         prng.state >>= 2;
         hyphenGuy.intensity = uint8(
-            prng.state & 3 == 0 ? prng.state % 253 : 252
-        ); // 25% chance + 253 intensities (2 + 8 = 10 bits)
+            prng.state & 3 == 0 ? 50 + (prng.state % 151) : 252
+        ); // 25% chance + 151 intensities (2 + 8 = 10 bits)
         prng.state >>= 10;
         hyphenGuy.inverted = prng.state & 7 == 0; // 12.5% chance (3 bits)
         prng.state >>= 3;
@@ -263,20 +263,21 @@ library AdoptAHyphenArt {
         // begin by instantiating an array of 253 `uint256`s, each with a single
         // `1` bit set to make use of `LibPRNG.shuffle`.
         uint256[] memory bgBitmapBits = new uint256[](253);
-        for (uint256 i; i < hyphenGuy.intensity; ) {
+        for (uint256 i; i <= hyphenGuy.intensity; ) {
             bgBitmapBits[i] = 1;
             unchecked {
                 ++i;
             }
         }
 
-        // Shuffle the array.
-        prng.shuffle(bgBitmapBits);
+        // Shuffle the array if intensity mode.
+        if (hyphenGuy.intensity < 252) prng.shuffle(bgBitmapBits);
+
         uint256 bgBitmap;
         for (uint256 i; i < 253; ) {
             // `intensity >= 252` implies `intenseBg = true`
-            bgBitmap |= bgBitmapBits[i];
             bgBitmap <<= 1;
+            bgBitmap |= bgBitmapBits[i];
             unchecked {
                 ++i;
             }
