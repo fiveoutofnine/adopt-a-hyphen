@@ -447,7 +447,7 @@ library AdoptAHyphenArt {
                         '" '
                     )
                     : "",
-                'width="600" height="600" rx="6" fill="',
+                'width="600" height="600" rx="24" fill="',
                 hyphenGuy.inverted ? colorHexString : "#FFF",
                 // `x` is `32` because we want a left padding of 32px. `y` is
                 // `20` because the Martian Mono font has an overhead of 12px,
