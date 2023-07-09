@@ -25,7 +25,7 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
     constructor(
         address _hyphenNft,
         address _owner
-    ) ERC721("adopt-a-hyphen", "-") Owned(_owner) {
+    ) ERC721("Adopt-a-Hyphen", "-") Owned(_owner) {
         hyphenNft = IERC721(_hyphenNft);
     }
 
