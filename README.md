@@ -40,7 +40,7 @@ node script/preview.js
 
 1. Configure the variables `HYPHEN_NFT_CONTRACT_ADDRESS` and `OWNER` inside [`print-bytecode.sh`](https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/print-bytecode.sh), which will write the bytecode with constructor arguments to `bytecode-with-constructor.txt`.
 
-2. [Optional] Copy the output saved to `bytecode-with-constructor.txt`, and compute the hash of it. [Here](https://emn178.github.io/online-tools/sha256.html) is a nice online tool for computing the hash.
+2. [Optional] Copy the output saved to `bytecode-with-constructor.txt`, and compute the hash of it. [**Here**](https://emn178.github.io/online-tools/sha256.html) is a nice online tool for computing the hash.
 
 3. [Optional] Compute a `create2` salt to deploy with. Here's some basic steps to do that with [**johguse/ERADICATE2**]git(https://github.com/johguse/ERADICATE2)
 
