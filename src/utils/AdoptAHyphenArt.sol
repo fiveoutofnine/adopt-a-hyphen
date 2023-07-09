@@ -234,7 +234,9 @@ library AdoptAHyphenArt {
         prng.state >>= 3;
         hyphenGuy.body = uint8(prng.state % 3); // 3 bodies (2 bits)
         prng.state >>= 2;
-        hyphenGuy.chest = uint8(prng.state & 1 == 0 ? 0 : 1 + (prng.state % 5)); // 50% chance + 5 chests (1 + 3 = 4 bits)
+        hyphenGuy.chest = uint8(
+            prng.state & 1 == 0 ? 0 : 1 + ((prng.state >> 1) % 5)
+        ); // 50% chance + 5 chests (1 + 3 = 4 bits)
         prng.state >>= 4;
         hyphenGuy.leg = uint8(prng.state & 3); // 4 legs (2 bits)
         prng.state >>= 2;
@@ -243,7 +245,7 @@ library AdoptAHyphenArt {
         hyphenGuy.chaosBg = prng.state & 3 == 0; // 25% chance (2 bits)
         prng.state >>= 2;
         hyphenGuy.intensity = uint8(
-            prng.state & 3 == 0 ? 50 + (prng.state % 151) : 252
+            prng.state & 3 == 0 ? 50 + ((prng.state >> 2) % 151) : 252
         ); // 25% chance + 151 intensities (2 + 8 = 10 bits)
         prng.state >>= 10;
         hyphenGuy.inverted = prng.state & 7 == 0; // 12.5% chance (3 bits)
