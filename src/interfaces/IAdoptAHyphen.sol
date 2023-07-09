@@ -32,4 +32,11 @@ interface IAdoptAHyphen {
     /// @dev `msg.sender` must have approvals set to `true` on the hyphen NFT
     /// with the operator as this contract's address.
     function mint(uint256 _tokenId) external;
+
+    // -------------------------------------------------------------------------
+    // Metadata
+    // -------------------------------------------------------------------------
+
+    /// @return The contract URI for this contract.
+    function contractURI() external view returns (string memory);
 }

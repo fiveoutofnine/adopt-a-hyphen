@@ -490,8 +490,7 @@ library AdoptAHyphenArt {
                 // (`3 * 51 = 153`), and we have the same 20px overhead as
                 // before, so `153 + 20 = 173`. `width` is `536` for the same
                 // reason. Finally, `height` is `204` because the character is 4
-                // lines tall, and each line is 51 pixels tall:
-                // `4 * 51 = 204`.
+                // lines tall, and each line is 51 pixels tall: `4 * 51 = 204`.
                 'N</pre></foreignObject><foreignObject x="32" y="173" width="53'
                 '6" height="204"><pre',
                 hyphenGuy.inverted

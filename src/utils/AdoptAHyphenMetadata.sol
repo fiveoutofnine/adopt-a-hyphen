@@ -21,34 +21,36 @@ library AdoptAHyphenMetadata {
     /// @dev To read from this constant, use
     /// `LibString.split(string(ADJECTIVES), "_")`.
     bytes constant ADJECTIVES =
-        "all-important_angel-faced_awe-inspiring_battle-scarred_big-boned_bird-"
-        "like_black-and-white_breath-taking_bright-eyed_broad-shouldered_bull-h"
-        "eaded_butter-soft_cat-eyed_cool-headed_cross-eyed_death-defying_devil-"
-        "may-care_dew-fresh_dim-witted_down-to-earth_eagle-nosed_easy-going_eve"
-        "r-changing_faint-hearted_feather-brained_fish-eyed_fly-by-night_free-t"
-        "hinking_fun-loving_half-baked_hawk-eyed_heart-breaking_high-spirited_h"
-        "oney-dipped_honey-tongued_ice-cold_ill-gotten_iron-grey_iron-willed_ke"
-        "en-eyed_kind-hearted_left-handed_lion-hearted_off-the-grid_open-faced_"
-        "pale-faced_razor-sharp_red-faced_rosy-cheeked_ruby-red_self-satisfied_"
-        "sharp-nosed_short-sighted_silky-haired_silver-tongued_sky-blue_slow-fo"
-        "oted_smooth-as-silk_smooth-talking_snake-like_snow-cold_snow-white_sof"
-        "t-voiced_sour-faced_steel-blue_stiff-necked_straight-laced_strong-mind"
-        "ed_sugar-sweet_thick-headed_tight-fisted_tongue-in-cheek_tough-minded_"
-        "trigger-happy_velvet-voiced_water-washed_white-faced_wide-ranging_wild"
-        "-haired_wishy-washy_work-weary_yellow-bellied_camera-shy_cold-as-ice_e"
-        "mpty-handed_fair-weather_fire-breathing_jaw-dropping_mind-boggling_no-"
-        "nonsense_rough-and-ready_slap-happy_smooth-faced_snail-paced_soul-sear"
-        "ching_star-studded_tongue-tied_too-good-to-be-true_turtle-necked_diamo"
-        "nd-handed";
+        "All-Important_Angel-Faced_Awe-Inspiring_Battle-Scarred_Big-Boned_Bird-"
+        "Like_Black-and-White_Breath-Taking_Bright-Eyed_Broad-Shouldered_Bull-H"
+        "eaded_Butter-Soft_Cat-Eyed_Cool-Headed_Cross-Eyed_Death-Defying_Devil-"
+        "May-Care_Dew-Fresh_Dim-Witted_Down-to-Earth_Eagle-Nosed_Easy-Going_Eve"
+        "r-Changing_Faint-Hearted_Feather-Brained_Fish-Eyed_Fly-by-Night_Free-T"
+        "hinking_Fun-Loving_Half-Baked_Hawk-Eyed_Heart-Breaking_High-Spirited_H"
+        "oney-Dipped_Honey-Tongued_Ice-Cold_Ill-Gotten_Iron-Grey_Iron-Willed_Ke"
+        "en-Eyed_Kind-Hearted_Left-Handed_Lion-Hearted_Off-the-Grid_Open-Faced_"
+        "Pale-Faced_Razor-Sharp_Red-Faced_Rosy-Cheeked_Ruby-Red_Self-Satisfied_"
+        "Sharp-Nosed_Short-Sighted_Silky-Haired_Silver-Tongued_Sky-Blue_Slow-Fo"
+        "oted_Smooth-as-Silk_Smooth-Talking_Snake-Like_Snow-Cold_Snow-White_Sof"
+        "t-Voiced_Sour-Faced_Steel-Blue_Stiff-Necked_Straight-Laced_Strong-Mind"
+        "ed_Sugar-Sweet_Thick-Headed_Tight-Fisted_Tongue-in-Cheek_Tough-Minded_"
+        "Trigger-Happy_Velvet-Voiced_Water-Washed_White-Faced_Wide-Ranging_Wild"
+        "-Haired_Wishy-Washy_Work-Weary_Yellow-Bellied_Camera-Shy_Cold-as-Ice_E"
+        "mpty-Handed_Fair-Weather_Fire-Breathing_Jaw-Dropping_Mind-Boggling_No-"
+        "Nonsense_Rough-and-ready_Slap-Happy_Smooth-Faced_Snail-Paced_Soul-Sear"
+        "ching_Star-Studded_Tongue-Tied_Too-Good-to-be-True_Turtle-Necked_Diamo"
+        "nd-Handed";
 
     /// @notice Joined list of first names to use when generating the name with
     /// `_` as the delimiter.
     /// @dev To read from this constant, use
     /// `LibString.split(string(FIRST_NAMES), "_")`.
     bytes constant FIRST_NAMES =
-        "james_robert_john_mike_david_will_richard_joe_tom_chris_charles_dan_ma"
-        "tt_tony_mark_mary_patty_jenny_linda_liz_barb_sue_jess_sarah_karen_lisa"
-        "_nancy_betty_sandra_peggy";
+        "Alexis_Ali_Alicia_Andres_Asha_Barb_Betty_Bruce_Charles_Chris_Coco_Dan_"
+        "David_Dennis_Elijah_Eugene_James_Jayden_Jenny_Jess_Joe_John_Jose_Karen"
+        "_Linda_Lisa_Liz_Marco_Mark_Mary_Matt_Mert_Mike_Mirra_Nancy_Noor_Novak_"
+        "Patty_Peggy_Ravi_Richard_Robert_Sandra_Sarah_Sue_Tayne_Tom_Tony_Will_Y"
+        "ana";
 
     /// @notice Joined list of hue names to use when generating the name with
     /// `_` as the delimiter.
@@ -78,7 +80,7 @@ library AdoptAHyphenMetadata {
             string.concat(
                 adjectives[_seed % 100],
                 " ",
-                firstNames[(_seed >> 7) % 30] // Adjectives used 7 bits
+                firstNames[(_seed >> 7) % 50] // Adjectives used 7 bits
             );
     }
 
