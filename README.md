@@ -29,7 +29,7 @@ adopt a hyphenated friend: exchange an [**On-Chain NFT**](https://zora.co/collec
             <td>–</td><td>–</td><td>–</td>
         </tr>
         <tr>
-        <td><a href="https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1">Zora Team On-Chain NFT</a></td>
+        <td><a href="https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1"><b>Zora NFT</b></a></td>
             <td><code><a href="https://etherscan.io/address/0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1">0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1</code></td><td>–</td><td>–</td>
         </tr>
         <tr>
