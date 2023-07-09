@@ -67,7 +67,7 @@ To test the metadata output, follow the instructions in [`PrintAdoptAHyphenScrip
 forge script script/PrintAdoptAHyphenScript.s.sol:PrintAdoptAHyphenScript -vvv
 ```
 
-To generate and write SVG files after running `PrintAdoptAHyphenScript` to `script/preview`, run the following command:
+To generate and write SVG files after running `PrintAdoptAHyphenScript` to `script/preview`, run the following command with Node `16<=`:
 
 ```sh
 node script/preview.js
