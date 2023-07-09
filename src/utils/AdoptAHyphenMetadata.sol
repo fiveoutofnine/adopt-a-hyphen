@@ -78,9 +78,9 @@ library AdoptAHyphenMetadata {
 
         return
             string.concat(
-                adjectives[_seed % 100],
+                firstNames[(_seed >> 7) % 50], // Adjectives used 7 bits
                 " ",
-                firstNames[(_seed >> 7) % 50] // Adjectives used 7 bits
+                adjectives[_seed % 100]
             );
     }
 

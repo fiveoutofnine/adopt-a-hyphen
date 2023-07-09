@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import {LibPRNG} from "solady/utils/LibPRNG.sol";
 import {LibString} from "solady/utils/LibString.sol";
 
-/// @title adopt-a-hyphen art
+/// @title Adopt-a-Hyphen art
 /// @notice A library for generating SVGs for {AdoptAHyphen}.
 /// @dev For this library to be correct, all `_seed` values must be consistent
 /// with every function in both {AdoptAHyphenArt} and {AdoptAHyphenMetadata}.
@@ -220,7 +220,7 @@ library AdoptAHyphenArt {
         // Initialize PRNG.
         LibPRNG.PRNG memory prng = LibPRNG.PRNG(_seed);
 
-        // THe Hyphen Guy.
+        // The Hyphen Guy.
         HyphenGuy memory hyphenGuy;
 
         // Select traits from `prng`.
