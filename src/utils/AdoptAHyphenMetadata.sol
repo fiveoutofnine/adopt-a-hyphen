@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import {LibString} from "solady/utils/LibString.sol";
 import {AdoptAHyphenArt} from "./AdoptAHyphenArt.sol";
 
-/// @title adopt-a-hyphen metadata
+/// @title Adopt-a-Hyphen metadata
 /// @notice A library for generating metadata for {AdoptAHyphen}.
 /// @dev For this library to be correct, all `_seed` values must be consistent
 /// with every function in both {AdoptAHyphenArt} and {AdoptAHyphenMetadata}.

@@ -9,7 +9,7 @@ import {AdoptAHyphenArt} from "./utils/AdoptAHyphenArt.sol";
 import {AdoptAHyphenMetadata} from "./utils/AdoptAHyphenMetadata.sol";
 import {Base64} from "./utils/Base64.sol";
 
-/// @title adopt-a-hyphen
+/// @title Adopt-a-Hyphen
 /// @notice Adopt a Hyphen: exchange a Hyphen NFT into this contract to mint a
 /// Hyphen Guy.
 contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
