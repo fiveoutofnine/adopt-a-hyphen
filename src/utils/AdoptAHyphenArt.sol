@@ -259,15 +259,36 @@ library AdoptAHyphenArt {
 
         // `bitmap` has `0`s where the index corresponds to a Hyphen Guy
         // character, and `1` where not. We use this to determine whether to
-        // render a Hyphen Guy character or a background character.
-        uint256 bitmap = 0x1FFFFFFFFFFFFFFFFFFFEFFFFF07FFFE4FFFFC9FFFFFFFFFFFFFFFFFFFFFFFFF;
+        // render a Hyphen Guy character or a background character. i.e. it
+        // looks like the following:
+        //                        11111111111111111111111
+        //                        11111111111111111111111
+        //                        11111111111111111111111
+        //                        11111111111111111111111
+        //                        11111111100000111111111
+        //                        11111111100100111111111
+        //                        11111111100100111111111
+        //                        11111111111111111111111
+        //                        11111111111111111111111
+        //                        11111111111111111111111
+        //                        11111111111111111111111
+        // By default, `bitmap` has `1`s set in the positions for hat and chest
+        // characters. In the following `assembly` block, we determine whether a
+        // hat or chest exists and `XOR` the relevant parts to transform the
+        // bitmap.
+        uint256 bitmap = 0x1FFFFFFFFFFFFFFFFFFFFFFFFF07FFFE4FFFFC9FFFFFFFFFFFFFFFFFFFFFFFFF;
+        uint8 hat = hyphenGuy.hat;
         uint8 chest = hyphenGuy.chest;
         assembly {
-            // Equivalent to `bitmap ^= ((chest != 0) << 126)`. We flip the bit
-            // corresponding to the position of the chest if there exists a
-            // chest trait because we don't want to draw both a background
-            // character and the chest character.
-            bitmap := xor(bitmap, shl(126, gt(chest, 0)))
+            // Equivalent to
+            // `bitmap ^= (((hat != 0) << 172) | ((chest != 0) << 126))`. We
+            // flip the bit corresponding to the position of the chest if there
+            // exists a chest trait because we don't want to draw both a
+            // background character and the chest character.
+            bitmap := xor(
+                bitmap,
+                or(shl(172, gt(hat, 0)), shl(126, gt(chest, 0)))
+            )
         }
 
         // Here, we initialize another bitmap to determine whether to render a
@@ -309,9 +330,17 @@ library AdoptAHyphenArt {
         // background `<text>` element.
         string memory bgStr = "";
         // The string corresponding to the characters of the contents of the
-        // Hyphen Guy `<text>` element. We start with 2 spaces because of the
-        // required padding to position the first row of Hyphen Guy characters.
-        string memory charStr = "  ";
+        // Hyphen Guy `<text>` element. We generate the entire first row here.
+        string memory charStr = string.concat(
+            "  ", // Start with 2 spaces for positioning.
+            // If the hat character is `&`, we need to draw it as
+            // its entity form.
+            hyphenGuy.hat != 5
+                ? string(abi.encodePacked(HATS[hyphenGuy.hat]))
+                : "&amp;",
+            hyphenGuy.hat != 0 ? "" : " ",
+            "  \n"
+        );
         // Iterate through the positions in reverse order. Note that the last
         // character (i.e. the one that contains ``N'' from ``CHAIN'') is not
         // drawn, and it must be accounted for after the loop.
@@ -341,18 +370,7 @@ library AdoptAHyphenArt {
                 // we can safely draw the chest character here--if no chest
                 // piece exists, a background character will be drawn anyway
                 // because it wouldn't pass the `(bitmap >> i) & 1 == 0` check.
-                if (i == 172) {
-                    charStr = string.concat(
-                        charStr,
-                        // If the hat character is `&`, we need to draw it as
-                        // its entity form.
-                        hyphenGuy.hat != 5
-                            ? string(abi.encodePacked(HATS[hyphenGuy.hat]))
-                            : "&amp;",
-                        hyphenGuy.hat != 0 ? "" : " ",
-                        "  \n"
-                    );
-                } else if (i == 151) {
+                if (i == 151) {
                     charStr = string.concat(
                         charStr,
                         string(abi.encodePacked(HEADS_LEFT[hyphenGuy.head])),
