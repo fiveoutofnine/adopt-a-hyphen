@@ -46,9 +46,11 @@ library AdoptAHyphenMetadata {
     /// @dev To read from this constant, use
     /// `LibString.split(string(FIRST_NAMES), "_")`.
     bytes constant FIRST_NAMES =
-        "james_robert_john_mike_david_will_richard_joe_tom_chris_charles_dan_ma"
-        "tt_tony_mark_mary_patty_jenny_linda_liz_barb_sue_jess_sarah_karen_lisa"
-        "_nancy_betty_sandra_peggy";
+        "Alexis_Ali_Alicia_Andres_Asha_Barb_Betty_Bruce_Charles_Chris_Coco_Dan_"
+        "David_Dennis_Elijah_Eugene_James_Jayden_Jenny_Jess_Joe_John_Jose_Karen"
+        "_Linda_Lisa_Liz_Marco_Mark_Mary_Matt_Mert_Mike_Mirra_Nancy_Noor_Novak_"
+        "Patty_Peggy_Ravi_Richard_Robert_Sandra_Sarah_Sue_Tayne_Tom_Tony_Will_Y"
+        "ana";
 
     /// @notice Joined list of hue names to use when generating the name with
     /// `_` as the delimiter.
@@ -78,7 +80,7 @@ library AdoptAHyphenMetadata {
             string.concat(
                 adjectives[_seed % 100],
                 " ",
-                firstNames[(_seed >> 7) % 30] // Adjectives used 7 bits
+                firstNames[(_seed >> 7) % 50] // Adjectives used 7 bits
             );
     }
 
