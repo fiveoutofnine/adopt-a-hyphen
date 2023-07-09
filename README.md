@@ -2,7 +2,7 @@
 
 [**Site**](https://partyvs.party/) - [**Party**](https://www.party.app/party/0x1c409297dd82167B6be3e79D4bF0B6f7a6ff0dB4) - [**Tweet**](https://twitter.com/prtyDAO/status/1674447750182719489) - [**hyphenation**](https://hyphenation.vercel.app) / [**scotato/hyphenation**](https://github.com/scotato/hyphenation)
 
-adopt a hyphenated friend: exchange an [**On-chain NFT**](https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1) to mint a hyphenated friend.
+adopt a hyphenated friend: exchange an [**On-Chain NFT**](https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1) to mint a hyphenated friend.
 
 > With each passing day, more and more people are switching from “on-chain” to “onchain.” While this may seem like a harmless choice, thousands of innocent hyphens are losing their place in the world. No longer needed to hold “on-chain” together, these hyphens are in need of a loving place to call home. What if you could make a difference in a hyphen’s life forever?
 
