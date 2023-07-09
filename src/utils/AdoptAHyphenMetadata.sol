@@ -122,9 +122,13 @@ library AdoptAHyphenMetadata {
                 hues[color],
                 '"},',
                 '{"trait_type":"vibe","value":"',
-                string(
-                    abi.encodePacked(AdoptAHyphenArt.BACKGROUNDS[background])
-                ),
+                background == 6
+                    ? "\\\\"
+                    : string(
+                        abi.encodePacked(
+                            AdoptAHyphenArt.BACKGROUNDS[background]
+                        )
+                    ),
                 '"},{"trait_type":"demeanor","value":"',
                 intensityMode ? "ex" : "in",
                 'troverted"},{"trait_type":"hobby","value":"',
