@@ -420,7 +420,15 @@ library AdoptAHyphenArt {
                         )
                     );
 
-                    bgStr = string.concat(bgStr, '<span style="color:', glitterHex, '">');
+                    bgStr = string.concat(bgStr,
+                        '<span',
+                        ' class="',
+                        string(abi.encodePacked(COLOR_CLASSES[particleColor])),
+                        '"',
+                        ' style="color:',
+                        glitterHex,
+                        '">'
+                    );
                 }
 
                 bgStr = string.concat(
