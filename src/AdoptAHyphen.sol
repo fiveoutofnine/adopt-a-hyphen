@@ -5,9 +5,9 @@ import {ERC721, ERC721TokenReceiver} from "solmate/tokens/ERC721.sol";
 import {Owned} from "solmate/auth/Owned.sol";
 import {IAdoptAHyphen} from "./interfaces/IAdoptAHyphen.sol";
 import {IERC721} from "./interfaces/IERC721.sol";
-import {Base64} from "./utils/Base64.sol";
 import {AdoptAHyphenArt} from "./utils/AdoptAHyphenArt.sol";
 import {AdoptAHyphenMetadata} from "./utils/AdoptAHyphenMetadata.sol";
+import {Base64} from "./utils/Base64.sol";
 
 /// @title adopt-a-hyphen
 /// @notice Adopt a Hyphen: exchange a Hyphen NFT into this contract to mint a
