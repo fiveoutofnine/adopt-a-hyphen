@@ -46,6 +46,7 @@ library AdoptAHyphenArt {
         uint8 intensity;
         bool inverted;
         uint8 color;
+        bool glitterBg;
     }
 
     // -------------------------------------------------------------------------
@@ -251,6 +252,9 @@ library AdoptAHyphenArt {
         hyphenGuy.inverted = prng.state & 7 == 0; // 12.5% chance (3 bits)
         prng.state >>= 3;
         hyphenGuy.color = uint8(prng.state & 7); // 8 colors (3 bits)
+        prng.state >>= 3;
+        hyphenGuy.glitterBg = !hyphenGuy.chaosBg && !hyphenGuy.inverted
+        && prng.state & 15 == 0; // 6.25% chance (4 bits) when other conditions are met 
 
         // Get the next state in the PRNG.
         prng.state = prng.next();
@@ -401,6 +405,24 @@ library AdoptAHyphenArt {
                 // We make use of the `bgBitmap` generated earlier from the
                 // intensity value here. If the check above passed, it means a
                 // background character must be drawn here.
+
+                bool addGlitter = hyphenGuy.glitterBg && (row < 7 || row > 15 || col < 7 || col > 15)
+                && (prng.state & 7 == 0);
+
+                if (addGlitter) {
+                    prng.state = prng.next();
+                    uint8 particleColor = uint8(prng.state & 7);
+                    
+                    string memory glitterHex = string.concat(
+                        "#",
+                        ((COLORS >> (particleColor << 5)) & 0xFFFFFF).toHexStringNoPrefix(
+                            3
+                        )
+                    );
+
+                    bgStr = string.concat(bgStr, '<span style="color:', glitterHex, '">');
+                }
+
                 bgStr = string.concat(
                     bgStr,
                     string(
@@ -415,6 +437,11 @@ library AdoptAHyphenArt {
                         )
                     )
                 );
+
+                if (addGlitter) {
+                    bgStr = string.concat(bgStr, '</span>');
+                }
+
                 // We need to generate a new random number for the next
                 // potentially-random character.
                 prng.state = prng.next();
