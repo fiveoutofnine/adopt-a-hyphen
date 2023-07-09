@@ -54,10 +54,6 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
 
     /// @inheritdoc IAdoptAHyphen
     function mint(uint256 _tokenId) external {
-        // Revert if the token has been ``burned'' (i.e. transferred into this
-        // contract).
-        if (hyphenNft.ownerOf(_tokenId) == address(this)) revert TokenMinted();
-
         // Transfer the Hyphen NFT into this contract.
         hyphenNft.transferFrom(msg.sender, address(this), _tokenId);
 

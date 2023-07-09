@@ -9,9 +9,6 @@ interface IAdoptAHyphen {
     // Errors
     // -------------------------------------------------------------------------
 
-    /// @notice Emitted when a token has already been minted.
-    error TokenMinted();
-
     /// @notice Emitted when a token hasn't been minted.
     error TokenUnminted();
 
