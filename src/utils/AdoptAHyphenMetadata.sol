@@ -9,157 +9,76 @@ import {AdoptAHyphenArt} from "./AdoptAHyphenArt.sol";
 /// @dev For this library to be correct, all `_seed` values must be consistent
 /// with every function in both {AdoptAHyphenArt} and {AdoptAHyphenMetadata}.
 library AdoptAHyphenMetadata {
+    using LibString for string;
     using LibString for uint256;
 
     /// @notice Number of bits used to generate the art. We take note of this
     /// because we don't want to use the same bits to generate the metadata.
     uint256 constant BITS_USED = 47;
 
+    /// @notice Joined list of adjectives to use when generating the name with
+    /// `_` as the delimiter.
+    /// @dev To read from this constant, use
+    /// `LibString.split(string(ADJECTIVES), "_")`.
+    bytes constant ADJECTIVES =
+        "all-important_angel-faced_awe-inspiring_battle-scarred_big-boned_bird-"
+        "like_black-and-white_breath-taking_bright-eyed_broad-shouldered_bull-h"
+        "eaded_butter-soft_cat-eyed_cool-headed_cross-eyed_death-defying_devil-"
+        "may-care_dew-fresh_dim-witted_down-to-earth_eagle-nosed_easy-going_eve"
+        "r-changing_faint-hearted_feather-brained_fish-eyed_fly-by-night_free-t"
+        "hinking_fun-loving_half-baked_hawk-eyed_heart-breaking_high-spirited_h"
+        "oney-dipped_honey-tongued_ice-cold_ill-gotten_iron-grey_iron-willed_ke"
+        "en-eyed_kind-hearted_left-handed_lion-hearted_off-the-grid_open-faced_"
+        "pale-faced_razor-sharp_red-faced_rosy-cheeked_ruby-red_self-satisfied_"
+        "sharp-nosed_short-sighted_silky-haired_silver-tongued_sky-blue_slow-fo"
+        "oted_smooth-as-silk_smooth-talking_snake-like_snow-cold_snow-white_sof"
+        "t-voiced_sour-faced_steel-blue_stiff-necked_straight-laced_strong-mind"
+        "ed_sugar-sweet_thick-headed_tight-fisted_tongue-in-cheek_tough-minded_"
+        "trigger-happy_velvet-voiced_water-washed_white-faced_wide-ranging_wild"
+        "-haired_wishy-washy_work-weary_yellow-bellied_camera-shy_cold-as-ice_e"
+        "mpty-handed_fair-weather_fire-breathing_jaw-dropping_mind-boggling_no-"
+        "nonsense_rough-and-ready_slap-happy_smooth-faced_snail-paced_soul-sear"
+        "ching_star-studded_tongue-tied_too-good-to-be-true_turtle-necked_diamo"
+        "nd-handed";
+
+    /// @notice Joined list of first names to use when generating the name with
+    /// `_` as the delimiter.
+    /// @dev To read from this constant, use
+    /// `LibString.split(string(FIRST_NAMES), "_")`.
+    bytes constant FIRST_NAMES =
+        "james_robert_john_mike_david_will_richard_joe_tom_chris_charles_dan_ma"
+        "tt_tony_mark_mary_patty_jenny_linda_liz_barb_sue_jess_sarah_karen_lisa"
+        "_nancy_betty_sandra_peggy";
+
+    /// @notice Joined list of hue names to use when generating the name with
+    /// `_` as the delimiter.
+    /// @dev To read from this constant, use
+    /// `LibString.split(string(HUES), "_")`.
+    bytes constant HUES = "red_blue_orange_teal_pink_green_purple_gray";
+
+    /// @notice Joined list of hobbies to use when generating the name with `_`
+    /// as the delimiter.
+    /// @dev To read from this constant, use
+    /// `LibString.split(string(HOBBIES), "_")`.
+    bytes constant HOBBIES =
+        "blit-mapp_terra-form_shield-build_loot-bagg_OKPC-draw_mooncat-rescu_au"
+        "to-glyph_animal-color_ava-starr_party-card_chain-runn_forgotten-run_bi"
+        "bo-glint";
+
     /// @notice Generates a Hyphen Guy name.
     /// @param _seed Seed to select traits for the Hyphen Guy.
     /// @return Hyphen Guy's name.
     function generateName(uint256 _seed) internal pure returns (string memory) {
-        string[] memory ADJECTIVES = new string[](100);
-        ADJECTIVES[0] = "all-important";
-        ADJECTIVES[1] = "angel-faced";
-        ADJECTIVES[2] = "awe-inspiring";
-        ADJECTIVES[3] = "battle-scarred";
-        ADJECTIVES[4] = "big-boned";
-        ADJECTIVES[5] = "bird-like";
-        ADJECTIVES[6] = "black-and-white";
-        ADJECTIVES[7] = "breath-taking";
-        ADJECTIVES[8] = "bright-eyed";
-        ADJECTIVES[9] = "broad-shouldered";
-        ADJECTIVES[10] = "bull-headed";
-        ADJECTIVES[11] = "butter-soft";
-        ADJECTIVES[12] = "cat-eyed";
-        ADJECTIVES[13] = "cool-headed";
-        ADJECTIVES[14] = "cross-eyed";
-        ADJECTIVES[15] = "death-defying";
-        ADJECTIVES[16] = "devil-may-care";
-        ADJECTIVES[17] = "dew-fresh";
-        ADJECTIVES[18] = "dim-witted";
-        ADJECTIVES[19] = "down-to-earth";
-        ADJECTIVES[20] = "eagle-nosed";
-        ADJECTIVES[21] = "easy-going";
-        ADJECTIVES[22] = "ever-changing";
-        ADJECTIVES[23] = "faint-hearted";
-        ADJECTIVES[24] = "feather-brained";
-        ADJECTIVES[25] = "fish-eyed";
-        ADJECTIVES[26] = "fly-by-night";
-        ADJECTIVES[27] = "free-thinking";
-        ADJECTIVES[28] = "fun-loving";
-        ADJECTIVES[29] = "half-baked";
-        ADJECTIVES[30] = "hawk-eyed";
-        ADJECTIVES[31] = "heart-breaking";
-        ADJECTIVES[32] = "high-spirited";
-        ADJECTIVES[33] = "honey-dipped";
-        ADJECTIVES[34] = "honey-tongued";
-        ADJECTIVES[35] = "ice-cold";
-        ADJECTIVES[36] = "ill-gotten";
-        ADJECTIVES[37] = "iron-grey";
-        ADJECTIVES[38] = "iron-willed";
-        ADJECTIVES[39] = "keen-eyed";
-        ADJECTIVES[40] = "kind-hearted";
-        ADJECTIVES[41] = "left-handed";
-        ADJECTIVES[42] = "lion-hearted";
-        ADJECTIVES[43] = "off-the-grid";
-        ADJECTIVES[44] = "open-faced";
-        ADJECTIVES[45] = "pale-faced";
-        ADJECTIVES[46] = "razor-sharp";
-        ADJECTIVES[47] = "red-faced";
-        ADJECTIVES[48] = "rosy-cheeked";
-        ADJECTIVES[49] = "ruby-red";
-        ADJECTIVES[50] = "self-satisfied";
-        ADJECTIVES[51] = "sharp-nosed";
-        ADJECTIVES[52] = "short-sighted";
-        ADJECTIVES[53] = "silky-haired";
-        ADJECTIVES[54] = "silver-tongued";
-        ADJECTIVES[55] = "sky-blue";
-        ADJECTIVES[56] = "slow-footed";
-        ADJECTIVES[57] = "smooth-as-silk";
-        ADJECTIVES[58] = "smooth-talking";
-        ADJECTIVES[59] = "snake-like";
-        ADJECTIVES[60] = "snow-cold";
-        ADJECTIVES[61] = "snow-white";
-        ADJECTIVES[62] = "soft-voiced";
-        ADJECTIVES[63] = "sour-faced";
-        ADJECTIVES[64] = "steel-blue";
-        ADJECTIVES[65] = "stiff-necked";
-        ADJECTIVES[66] = "straight-laced";
-        ADJECTIVES[67] = "strong-minded";
-        ADJECTIVES[68] = "sugar-sweet";
-        ADJECTIVES[69] = "thick-headed";
-        ADJECTIVES[70] = "tight-fisted";
-        ADJECTIVES[71] = "tongue-in-cheek";
-        ADJECTIVES[72] = "tough-minded";
-        ADJECTIVES[73] = "trigger-happy";
-        ADJECTIVES[74] = "velvet-voiced";
-        ADJECTIVES[75] = "water-washed";
-        ADJECTIVES[76] = "white-faced";
-        ADJECTIVES[77] = "wide-ranging";
-        ADJECTIVES[78] = "wild-haired";
-        ADJECTIVES[79] = "wishy-washy";
-        ADJECTIVES[80] = "work-weary";
-        ADJECTIVES[81] = "yellow-bellied";
-        ADJECTIVES[82] = "camera-shy";
-        ADJECTIVES[83] = "cold-as-ice";
-        ADJECTIVES[84] = "empty-handed";
-        ADJECTIVES[85] = "fair-weather";
-        ADJECTIVES[86] = "fire-breathing";
-        ADJECTIVES[87] = "jaw-dropping";
-        ADJECTIVES[88] = "mind-boggling";
-        ADJECTIVES[89] = "no-nonsense";
-        ADJECTIVES[90] = "rough-and-ready";
-        ADJECTIVES[91] = "slap-happy";
-        ADJECTIVES[92] = "smooth-faced";
-        ADJECTIVES[93] = "snail-paced";
-        ADJECTIVES[94] = "soul-searching";
-        ADJECTIVES[95] = "star-studded";
-        ADJECTIVES[96] = "tongue-tied";
-        ADJECTIVES[97] = "too-good-to-be-true";
-        ADJECTIVES[98] = "turtle-necked";
-        ADJECTIVES[99] = "diamond-handed";
-
-        string[] memory FIRST_NAMES = new string[](100);
-        FIRST_NAMES[0] = "james";
-        FIRST_NAMES[1] = "robert";
-        FIRST_NAMES[2] = "john";
-        FIRST_NAMES[3] = "mike";
-        FIRST_NAMES[4] = "david";
-        FIRST_NAMES[5] = "will";
-        FIRST_NAMES[6] = "richard";
-        FIRST_NAMES[7] = "joe";
-        FIRST_NAMES[8] = "tom";
-        FIRST_NAMES[9] = "chris";
-        FIRST_NAMES[10] = "charles";
-        FIRST_NAMES[11] = "dan";
-        FIRST_NAMES[12] = "matt";
-        FIRST_NAMES[13] = "tony";
-        FIRST_NAMES[14] = "mark";
-        FIRST_NAMES[15] = "mary";
-        FIRST_NAMES[16] = "patty";
-        FIRST_NAMES[17] = "jenny";
-        FIRST_NAMES[18] = "linda";
-        FIRST_NAMES[19] = "liz";
-        FIRST_NAMES[20] = "barb";
-        FIRST_NAMES[21] = "sue";
-        FIRST_NAMES[22] = "jess";
-        FIRST_NAMES[23] = "sarah";
-        FIRST_NAMES[24] = "karen";
-        FIRST_NAMES[25] = "lisa";
-        FIRST_NAMES[26] = "nancy";
-        FIRST_NAMES[27] = "betty";
-        FIRST_NAMES[28] = "sandra";
-        FIRST_NAMES[29] = "peggy";
+        string[] memory adjectives = string(ADJECTIVES).split("_");
+        string[] memory firstNames = string(FIRST_NAMES).split("_");
 
         _seed >>= BITS_USED;
 
         return
             string.concat(
-                ADJECTIVES[_seed % 100],
+                adjectives[_seed % 100],
                 " ",
-                FIRST_NAMES[(_seed >> 7) % 30] // Adjectives used 7 bits
+                firstNames[(_seed >> 7) % 30] // Adjectives used 7 bits
             );
     }
 
@@ -169,30 +88,8 @@ library AdoptAHyphenMetadata {
     function generateAttributes(
         uint256 _seed
     ) internal pure returns (string memory) {
-        string[] memory HUES = new string[](8);
-        HUES[0] = "red";
-        HUES[1] = "blue";
-        HUES[2] = "orange";
-        HUES[3] = "teal";
-        HUES[4] = "pink";
-        HUES[5] = "green";
-        HUES[6] = "purple";
-        HUES[7] = "gray";
-
-        string[] memory HOBBIES = new string[](13);
-        HOBBIES[0] = "blit-mapp";
-        HOBBIES[1] = "terra-form";
-        HOBBIES[2] = "shield-build";
-        HOBBIES[3] = "loot-bagg";
-        HOBBIES[4] = "OKPC-draw";
-        HOBBIES[5] = "mooncat-rescu";
-        HOBBIES[6] = "auto-glyph";
-        HOBBIES[7] = "animal-color";
-        HOBBIES[8] = "ava-starr";
-        HOBBIES[9] = "party-card";
-        HOBBIES[10] = "chain-runn";
-        HOBBIES[11] = "forgotten-run";
-        HOBBIES[12] = "bibo-glint";
+        string[] memory hues = string(HUES).split("_");
+        string[] memory hobbies = string(HOBBIES).split("_");
 
         // We directly use the value of `_seed` because we don't need further
         // randomness.
@@ -222,7 +119,7 @@ library AdoptAHyphenMetadata {
         return
             string.concat(
                 '[{"name":"hue","value":"',
-                HUES[color],
+                hues[color],
                 '"},',
                 '{"name":"vibe","value":"',
                 string(
@@ -231,7 +128,7 @@ library AdoptAHyphenMetadata {
                 '"},{"demeanor":"',
                 intensityMode ? "ex" : "in",
                 'troverted"},{"name":"hobby","value":"',
-                HOBBIES[hobby],
+                hobbies[hobby],
                 'ing"},{"name":"rizz","value":',
                 rizz.toString(),
                 "}]"
