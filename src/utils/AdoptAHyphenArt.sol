@@ -412,21 +412,11 @@ library AdoptAHyphenArt {
                 if (addGlitter) {
                     prng.state = prng.next();
                     uint8 particleColor = uint8(prng.state & 7);
-                    
-                    string memory glitterHex = string.concat(
-                        "#",
-                        ((COLORS >> (particleColor << 5)) & 0xFFFFFF).toHexStringNoPrefix(
-                            3
-                        )
-                    );
-
                     bgStr = string.concat(bgStr,
-                        '<span',
-                        ' class="',
+                        '<span class="',
                         string(abi.encodePacked(COLOR_CLASSES[particleColor])),
-                        '"',
-                        ' style="color:',
-                        glitterHex,
+                        '" style="color:#',
+                        ((COLORS >> (particleColor << 5)) & 0xFFFFFF).toHexStringNoPrefix(3),
                         '">'
                     );
                 }
