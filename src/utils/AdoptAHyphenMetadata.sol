@@ -118,18 +118,18 @@ library AdoptAHyphenMetadata {
 
         return
             string.concat(
-                '[{"name":"hue","value":"',
+                '[{"trait_type":"hue","value":"',
                 hues[color],
                 '"},',
-                '{"name":"vibe","value":"',
+                '{"trait_type":"vibe","value":"',
                 string(
                     abi.encodePacked(AdoptAHyphenArt.BACKGROUNDS[background])
                 ),
-                '"},{"demeanor":"',
+                '"},{"trait_type":"demeanor","value":"',
                 intensityMode ? "ex" : "in",
-                'troverted"},{"name":"hobby","value":"',
+                'troverted"},{"trait_type":"hobby","value":"',
                 hobbies[hobby],
-                'ing"},{"name":"rizz","value":',
+                'ing"},{"trait_type":"rizz","value":',
                 rizz.toString(),
                 "}]"
             );
