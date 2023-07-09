@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import {LibPRNG} from "solady/utils/LibPRNG.sol";
 import {LibString} from "solady/utils/LibString.sol";
 
-/// @title AdoptAHyphenArt
+/// @title adopt-a-hyphen art
 /// @notice A library for generating SVGs for {AdoptAHyphen}.
 /// @dev For this library to be correct, all `_seed` values must be consistent
 /// with every function in both {AdoptAHyphenArt} and {AdoptAHyphenMetadata}.
@@ -188,6 +188,8 @@ library AdoptAHyphenArt {
     bytes32 constant LEGS_RIGHT = "||\\\\";
 
     /// @notice Characters corresponding to the `background` trait's characters.
+    /// @dev If the background character is `\` (i.e. index of `6`), then it
+    /// must be escaped properly in JSONs, i.e. `\\\\`.
     bytes32 constant BACKGROUNDS = "#*+-/=\\|.";
 
     /// @notice Characters for the last few characters in the background that

@@ -9,27 +9,34 @@ import {Base64} from "./utils/Base64.sol";
 import {AdoptAHyphenArt} from "./utils/AdoptAHyphenArt.sol";
 import {AdoptAHyphenMetadata} from "./utils/AdoptAHyphenMetadata.sol";
 
-/// @title AdoptAHyphen
+/// @title adopt-a-hyphen
+/// @notice Adopt a Hyphen: exchange a Hyphen NFT into this contract to mint a
+/// Hyphen Guy.
 contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
-    /// @notice The Zora NFT contract.
-    IERC721 internal constant ZORA_NFT =
-        IERC721(0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1);
+    /// @notice The Hyphen NFT contract that must be transferred into this
+    /// contract in order to mint a token.
+    IERC721 public immutable override hyphenNft;
 
     // -------------------------------------------------------------------------
     // Constructor + Mint
     // -------------------------------------------------------------------------
 
     /// @param _owner Initial owner of the contract.
-    constructor(address _owner) ERC721("adopt-a-friend", "-") Owned(_owner) {}
+    constructor(
+        address _hyphenNft,
+        address _owner
+    ) ERC721("adopt-a-hyphen", "-") Owned(_owner) {
+        hyphenNft = IERC721(_hyphenNft);
+    }
 
     /// @inheritdoc IAdoptAHyphen
     function mint(uint256 _tokenId) external {
         // Revert if the token has been ``burned'' (i.e. transferred into this
         // contract).
-        if (ZORA_NFT.ownerOf(_tokenId) == address(this)) revert TokenMinted();
+        if (hyphenNft.ownerOf(_tokenId) == address(this)) revert TokenMinted();
 
-        // Transfer the Zora NFT into this contract.
-        ZORA_NFT.safeTransferFrom(msg.sender, address(this), _tokenId);
+        // Transfer the Hyphen NFT into this contract.
+        hyphenNft.safeTransferFrom(msg.sender, address(this), _tokenId);
 
         // Mint token.
         _mint(msg.sender, _tokenId);
@@ -44,7 +51,7 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
         uint256 _tokenId
     ) public view override returns (string memory) {
         // Revert if the token hasn't been minted.
-        if (_ownerOf[_tokenId] != address(0)) revert TokenUnminted();
+        if (_ownerOf[_tokenId] == address(0)) revert TokenUnminted();
 
         // Seed to generate the art and metadata from.
         uint256 seed = uint256(keccak256(abi.encodePacked(_tokenId)));

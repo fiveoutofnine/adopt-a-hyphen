@@ -1,6 +1,7 @@
 # Compiler files
 cache/
 out/
+bytecode-with-constructor.txt
 
 # Ignores development broadcast logs
 !/broadcast
