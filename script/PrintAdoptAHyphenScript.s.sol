@@ -15,7 +15,7 @@ contract PrintAdoptAHyphenScript is Script {
     /// @notice Deploys an instance of `AdoptAHyphen` then mints tokens #1, ...,
     /// and #9999.
     function setUp() public {
-        adoptAFriend = new AdoptAHyphen(address(0xC0FFEE));
+        adoptAFriend = new AdoptAHyphen(address(0xBEEF), address(0xC0FFEE));
         for (uint256 i; i < 10000; ) {
             // adoptAFriend.mint(i);
             unchecked {
