@@ -8,6 +8,43 @@ adopt a hyphenated friend: exchange an [**On-Chain NFT**](https://zora.co/collec
 
 > Introducing the Adopt-a-Hyphen program. For the next 3 days, you can adopt a hyphen and give it a new home…right in your wallet! To adopt a hyphen, simply mint an Adoption Ticket. Each Adoption Ticket can be redeemed to adopt one hyphen. As is their nature, each hyphen lives fully on-chain and is rendered in solidity as cute, generative ASCII art. Upon redeeming your Adoption Ticket, you’ll enjoy the surprise of finding out what kind of hyphen you got!
 
+## Deployments
+
+<table>
+    <thead>
+        <tr>
+            <th>Chain</th>
+            <th>Chain ID</th>
+            <th>Contract</th>
+            <th>Address</th>
+            <th>Optimization runs</th>
+            <th><code>solc</code> version</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">Mainnet</td>
+            <td rowspan="2">1</td>
+            <td><code><a href="https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/src/AdoptAHyphen.sol">AdoptAHyphen</a></code></td>
+            <td>–</td><td>–</td><td>–</td>
+        </tr>
+        <tr>
+        <td><a href="https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1">Zora Team On-Chain NFT</a></td>
+            <td><code><a href="https://etherscan.io/address/0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1">0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1</code></td><td>–</td><td>–</td>
+        </tr>
+        <tr>
+            <td rowspan="2">Goerli</td>
+            <td rowspan="2">5</td>
+            <td><code><a href="https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/src/AdoptAHyphen.sol">AdoptAHyphen</a></code></td>
+            <td><code><a href="https://goerli.etherscan.io/address/0x16a95a59A7473361a35eb0EFC444Ab350f72131B">0x16a95a59A7473361a35eb0EFC444Ab350f72131B</code></td><td>7777777</td><td><code>v0.8.17+commit.8df45f5f</code></td>
+        </tr>
+        <tr>
+        <td><code><a href="https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/src/utils/mock/MockNFT.sol">MockNFT</a></code></td>
+            <td><code><a href="https://goerli.etherscan.io/address/0x2929cFd1F1ACd68A8aF3c5B0913bDdBE3306022f">0x2929cFd1F1ACd68A8aF3c5B0913bDdBE3306022f</code></td><td>0</td><td><code>v0.8.17+commit.8df45f5f</code></td>
+        </tr>
+    </tbody>
+<table>
+
 ## Usage
 
 This project uses [**Foundry**](https://github.com/foundry-rs/foundry) as its development/testing framework.
@@ -24,7 +61,7 @@ forge install
 
 ### Sample metadata/art generation
 
-To test the metadata output, follow the instructions in [`PrintAdoptAHyphenScript`](https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/script/PrintAdoptAHyphenScript.s.sol), and run the following command:
+To test the metadata output, follow the instructions in [`PrintAdoptAHyphenScript`](https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/script/PrintAdoptAHyphenScript.s.sol) and run the following command:
 
 ```sh
 forge script script/PrintAdoptAHyphenScript.s.sol:PrintAdoptAHyphenScript -vvv
@@ -53,7 +90,7 @@ make
 
 ### Verifying `AdoptAHyphen`
 
-To generate the constructor arguments, run the following command:
+To compute the constructor arguments, you can copy paste the last 128 characters from `bytecode-with-constructor.txt` (remember to run `print-bytecode.sh` with the correct constructor arguments set first!) or run the following command:
 
 ```
 cast abi-encode "constructor(address,address)" $HYPHEN_NFT_CONTRACT_ADDRESS $OWNER
