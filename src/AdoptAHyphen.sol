@@ -22,11 +22,7 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
     /// @param _owner Initial owner of the contract.
     constructor(address _owner) ERC721("adopt-a-friend", "-") Owned(_owner) {}
 
-    /// @notice Mints a token to the sender in exchange for the hyphen NFT from
-    /// Zora (the Zora NFT gets transferred into this contract, and it can never
-    /// be transferred out).
-    /// @dev `msg.sender` must have approvals set to `true` on the Zora NFT with
-    /// the operator as this contract's address.
+    /// @inheritdoc IAdoptAHyphen
     function mint(uint256 _tokenId) external {
         // Revert if the token has been ``burned'' (i.e. transferred into this
         // contract).
