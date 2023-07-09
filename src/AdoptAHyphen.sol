@@ -59,7 +59,7 @@ contract AdoptAHyphen is IAdoptAHyphen, ERC721, ERC721TokenReceiver, Owned {
         if (hyphenNft.ownerOf(_tokenId) == address(this)) revert TokenMinted();
 
         // Transfer the Hyphen NFT into this contract.
-        hyphenNft.safeTransferFrom(msg.sender, address(this), _tokenId);
+        hyphenNft.transferFrom(msg.sender, address(this), _tokenId);
 
         // Mint token.
         _mint(msg.sender, _tokenId);
