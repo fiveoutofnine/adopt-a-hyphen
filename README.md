@@ -1,12 +1,14 @@
 # Adopt-a-Hyphen
 
-[**Site**](https://adopt-a-hyphen.com) - [**Party**](https://www.party.app/party/0x1c409297dd82167B6be3e79D4bF0B6f7a6ff0dB4) - [**hyphenation**](https://hyphenation.vercel.app) / [**scotato/hyphenation**](https://github.com/scotato/hyphenation)
+[**Site**](https://adopt-a-hyphen.com) - [**Party**](https://www.party.app/party/0x1c409297dd82167B6be3e79D4bF0B6f7a6ff0dB4) - [**Preview**](https://hyphenation.vercel.app) ([**scotato/hyphenation**](https://github.com/scotato/hyphenation))
 
 Adopt a Hyphen: exchange an on-chain [**Adoption Ticket**](https://zora.co/collect/eth:0x73d24948fD946AE7F20EED63D7C0680eDfaF36f1) to redeem your [**hyphen**](http://adopt-a-hyphen.com/).
 
-> With each passing day, more and more people are switching from “on-chain” to “onchain.” While this may seem like a harmless choice, thousands of innocent hyphens are losing their place in the world. No longer needed to hold “on-chain” together, these hyphens are in need of a loving place to call home. What if you could make a difference in a hyphen’s life forever?
-
-> Introducing the Adopt-a-Hyphen program. For the next 3 days, you can adopt a hyphen and give it a new home…right in your wallet! To adopt a hyphen, simply mint an Adoption Ticket. Each Adoption Ticket can be redeemed to adopt one hyphen. As is their nature, each hyphen lives fully on-chain and is rendered in solidity as cute, generative ASCII art. Upon redeeming your Adoption Ticket, you’ll enjoy the surprise of finding out what kind of hyphen you got!
+<blockquote>
+With each passing day, more and more people are switching from “on-chain” to “onchain.” While this may seem like a harmless choice, thousands of innocent hyphens are losing their place in the world. No longer needed to hold “on-chain” together, these hyphens are in need of a loving place to call home. What if you could make a difference in a hyphen’s life forever?
+<br/><br/>
+Introducing the Adopt-a-Hyphen program. For the next 3 days, you can adopt a hyphen and give it a new home…right in your wallet! To adopt a hyphen, simply mint an Adoption Ticket. Each Adoption Ticket can be redeemed to adopt one hyphen. As is their nature, each hyphen lives fully on-chain and is rendered in Solidity as cute, generative ASCII art. Upon redeeming your Adoption Ticket, you’ll enjoy the surprise of finding out what kind of hyphen you got!
+</blockquote>
 
 ## Deployments
 
@@ -77,7 +79,7 @@ node script/preview.js
 
 1. Configure the variables `HYPHEN_NFT_CONTRACT_ADDRESS` and `OWNER` inside [`print-bytecode.sh`](https://github.com/fiveoutofnine/adopt-a-hyphen/blob/main/print-bytecode.sh), which will write the bytecode with constructor arguments to `bytecode-with-constructor.txt`.
 
-2. [Optional] Compute a `create2` salt to deploy with. Here's some basic steps to do that with [**flood-protocol/maldon**](https://github.com/floodprotocol/maldon):
+2. [Optional] Compute a `create2` salt to deploy with. Here's some basic steps to do that with [**flood-protocol/maldon**](https://github.com/flood-protocol/maldon):
 
 ```sh
 git clone https://github.com/flood-protocol/maldon.git
